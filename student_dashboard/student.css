@@ -1,0 +1,169 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #c2d4ff, #ffe0f0);
+  color: #333;
+}
+
+.parent {
+  display: grid;
+  grid-template-areas:
+    "logo search search"
+    "navbar div10 profile"
+    "navbar class profile"
+    "navbar lesson calendar"
+    "navbar logout reminder";
+  grid-template-columns: 200px 1fr 300px;
+  gap: 20px;
+  padding: 20px;
+}
+
+.logo img {
+  grid-area: logo;
+  width: 200px;     
+  height: auto;     
+}
+
+
+.navbar {
+  grid-area: navbar;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+
+.logout {
+  grid-area: logout;
+}
+
+.logout a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.search {
+  grid-area: search;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.div10 {
+  grid-area: div10;
+  background: #f9eaff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.div10 button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #bb00ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.class {
+  grid-area: class;
+  display: flex;
+  gap: 15px;
+}
+
+.class-card {
+  background: #e4e9ff;
+  padding: 15px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.lesson {
+  grid-area: lesson;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.lesson table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lesson th, .lesson td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile {
+  grid-area: profile;
+  text-align: center;
+  background: #ffe0f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #bb00ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.calendar {
+  grid-area: calendar;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.reminder {
+  grid-area: reminder;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+  .parent {
+    grid-template-areas:
+      "logo"
+      "search"
+      "navbar"
+      "div10"
+      "class"
+      "lesson"
+      "profile"
+      "calendar"
+      "reminder"
+      "logout";
+    grid-template-columns: 1fr;
+  }
+
+  .class {
+    flex-direction: column;
+  }
+}
