@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - MyTutorHub</title>
+  <link rel="stylesheet" href="register.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="mytutorhub_logo.png" alt="MyTutorHub Logo" />
+      <span>MYTUTORHUB</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="../home_dashboard/home.html">Home</a></li>
+            <li><a href="../home_dashboard/home.html#about">About Us</a></li>
+            <li><a href="register.html">Register</a></li> 
+            <li><a href="../loginpage/login.html">Log In</a></li>
+        </ul>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <!-- Image Section -->
+    <div class="image-section">
+      <div class="welcome-message">
+        <h1>Welcome, New User!</h1>
+      </div>
+      <img src="registericon.png" alt="Learning Illustration" class="registration-image">
+      <div class="instruction-text">
+        <p>Please fill the register form.</p>
+      </div>
+    </div>
+    
+    <!-- Form Section -->
+    <div class="form-section">
+      <div class="form-wrapper">
+        <h2>Create your account</h2>
+        
+        <div class="account-type">
+          <div class="account-option active" data-type="student">
+            <span>Student</span>
+          </div>
+          <div class="account-option" data-type="tutor">
+            <span>Tutor</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" placeholder="Choose a username" />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="Your email address" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Create a password" />
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" placeholder="Confirm your password" />
+        </div>
+
+        <div>
+          <button class="submit-button">Register</button>
+        </div>
+
+        <p class="login-text">
+          Already have an account? <a href="../loginpage/login.html">Log in</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.account-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.account-option').forEach(opt => {
+          opt.classList.remove('active');
+        });
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
