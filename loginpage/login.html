@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - MyTutorHub</title>
+  <link rel="stylesheet" href="login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="mytutorhub_logo.png" alt="MyTutorHub Logo">
+      <span>MYTUTORHUB</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../home_dashboard/home.html">Home</a></li>
+        <li><a href="../home_dashboard/home.html#about">About Us</a></li>
+        <li><a href="../registerpage/register.html">Register</a></li>
+        <li><a href="login.html">Log In</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>Login as</h2>
+      <div class="role-buttons">
+        <button class="role-btn active" data-type="student">Student</button>
+        <button class="role-btn" data-type="tutor">Tutor</button>
+      </div>
+    </div>
+
+    <div class="login-box">
+      <h2 class="welcome">Welcome Back</h2>
+      <div class="input-group">
+        <i class="fas fa-user icon"></i>
+        <input type="text" placeholder="Username" />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock icon"></i>
+        <input type="password" placeholder="Password" />
+      </div>
+      <div class="options">
+        <label>
+          <input type="checkbox" />
+          Remember
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button class="login-btn">LOGIN</button>
+      <p class="create-link">Don't have an account? <a href="../registerpage/register.html">Create Account</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.role-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        console.log("Selected role:", this.dataset.type);
+      });
+    });
+  </script>
+
+</body>
+</html>
