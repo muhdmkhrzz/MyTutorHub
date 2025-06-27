@@ -1,123 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard</title>
-  <link rel="stylesheet" href="tutor.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Dashboard</title>
+  <link rel="stylesheet" href="tutor.css" />
 </head>
 <body>
-  <div class="dashboard">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="mytutorhub_logo.png" alt="MyTutorHub Logo">
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#" class="active">Dashboard</a></li>
-          <li><a href="#">Courses</a></li>
-          <li><a href="#">Students</a></li>
-          <li><a href="#">Availability</a></li>
-        </ul>
-      </nav>
-      <a class="logout" href="#">Logout</a>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <header class="top-bar">
-        <span class="date" id="current-date"></span>
-        <script>
-          // Display current date in "DD Month YYYY, Day" format
-          const dateElem = document.getElementById('current-date');
-          const now = new Date();
-          const options = { day: '2-digit', month: 'long', year: 'numeric', weekday: 'long' };
-          dateElem.textContent = now.toLocaleDateString('en-GB', options);
-        </script>
-        <div class="user-info">
-          <span>Hi, Lily!</span>
-          <img src="your-profile.jpg" alt="Profile Picture">
-        </div>
-      </header>
-
-      <section class="schedule">
-        <h2>Today's schedule</h2>
-        <div class="classes">
-          <div class="class-card">
-            <h3>HCI - Unit I</h3>
-            <p>👥 40 students</p>
-            <p>📅 25 Jun 2025</p>
-            <p>🕗 08:00 - 10:00</p>
-          </div>
-          <div class="class-card">
-            <h3>Data Structure</h3>
-            <p>👥 35 students</p>
-            <p>📅 25 Jun 2025</p>
-            <p>🕘 09:00 - 11:00</p>
-          </div>
-          <div class="class-card">
-            <h3>AI - Theory I</h3>
-            <p>👥 25 students</p>
-            <p>📅 25 Jun 2025</p>
-            <p>🕒 15:00 - 17:00</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="availability">
-        <h3>Availability</h3>
-        <div class="calendar-container">
-          <div id="calendar"></div>
-          <div class="filters">
-            <input type="date" placeholder="Start">
-            <input type="date" placeholder="End">
-            <select>
-              <option>Select Course</option>
-              <!-- Add more options here -->
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <section class="upload-material">
-        <h3>Upload Class Material</h3>
-        <div class="upload-cards">
-          <div class="upload-card">
-            <strong>June 21</strong>
-            <p>Operating System<br>08:00 - 10:00</p>
-            <a href="#">⬆️</a>
-          </div>
-          <div class="upload-card">
-            <strong>July 4</strong>
-            <p>Database<br>14:00 - 16:00</p>
-            <a href="#">⬆️</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="articles">
-        <h3>Articles</h3>
-        <div class="article-cards">
-          <div class="article-card">
-            <img src="python-ide.jpg" alt="Python IDE">
-            <p>Top 5 IDEs for Teaching Python Effectively</p>
-          </div>
-          <div class="article-card">
-            <img src="github-projects.jpg" alt="GitHub">
-            <p>How to Integrate GitHub into Student Projects</p>
-          </div>
-          <div class="article-card">
-            <img src="cybersecurity.jpg" alt="Cybersecurity">
-            <p>Teaching Cybersecurity Without Overwhelming Students</p>
-          </div>
-        </div>
-      </section>
-    </main>
+  <div class="sidebar">
+    <img src="mytutorhub_logo.png" alt="Logo" class="logo" />
+    <a href="dashboard.php" class="active">Dashboard</a>
+    <a href="#">Courses</a>
+    <a href="#">Students</a>
+    <a href="#">Chats</a>
+    <a href="#">Availability</a>
+    <a href="../logout.php">Logout</a>
   </div>
 
-  <script>
-    // Optionally implement interactive calendar logic
-  </script>
+  <div class="main-content">
+    <div class="header">
+      <h2>Today's schedule</h2>
+      <div class="profile">
+        <span>Hi, <?= htmlspecialchars($tutor['tutor_name'] ?? 'Tutor') ?>!</span>
+        <img src="../img/profile.jpg" alt="Tutor Photo" />
+      </div>
+    </div>
+
+    <h3>Classes</h3>
+    <div class="classes-container">
+      <?php if (!empty($classes)): ?>
+        <?php foreach ($classes as $class): ?>
+          <div class="class-card">
+            <h4><?= htmlspecialchars($class['class_title']) ?></h4>
+            <p><?= htmlspecialchars($class['class_capacity']) ?> students</p>
+            <p><?= date("d M Y", strtotime($class['class_date'])) ?></p>
+            <p><?= htmlspecialchars($class['class_starttime']) ?> - <?= htmlspecialchars($class['class_endtime']) ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p>No classes scheduled.</p>
+      <?php endif; ?>
+    </div>
+
+    <div class="availability-section">
+      <h3>Availability</h3>
+      <div class="calendar-box">
+        <span>June 2025</span>
+        <div class="calendar-dummy">
+          [Calendar Placeholder]
+        </div>
+        <div class="availability-controls">
+          <input type="time" placeholder="Start" />
+          <input type="time" placeholder="End" />
+          <select>
+            <option>Select Course</option>
+            <?php foreach ($classes as $class): ?>
+              <option><?= htmlspecialchars($class['class_title']) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="upload-material">
+      <h3>Upload Class Material</h3>
+      <?php foreach ($materials as $m): ?>
+        <div class="material-card">
+          <div class="date"><?= date("d M", strtotime($m["date"])) ?></div>
+          <div class="info">
+            <h4><?= htmlspecialchars($m["title"]) ?></h4>
+            <p><?= htmlspecialchars($m["time"]) ?></p>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="articles-section">
+      <h3>Articles</h3>
+      <div class="articles">
+        <div class="article-card">
+          <img src="../img/article1.jpg" alt="">
+          <p>Top 5 IDEs for Teaching Python Effectively</p>
+        </div>
+        <div class="article-card">
+          <img src="../img/article2.jpg" alt="">
+          <p>How to Integrate GitHub into Student Projects</p>
+        </div>
+        <div class="article-card">
+          <img src="../img/article3.jpg" alt="">
+          <p>Teaching Cybersecurity Without Overwhelming Students</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
