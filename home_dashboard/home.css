@@ -200,10 +200,10 @@ nav a:hover {
 
 /* Team Members */
 .team-member img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 90px;
+    height: 90px;
+    border-radius: 80%;
+    object-fit: cover;;
     margin-bottom: 15px;
     border: 2px solid #5a00c4;
     display: block;
