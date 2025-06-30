@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - MyTutorHub</title>
-  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="logintutor.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -16,26 +16,28 @@
       <span>MYTUTORHUB</span>
     </div>
     <nav>
-      <ul>
-        <li><a href="../home_dashboard/home.html">Home</a></li>
-        <li><a href="../home_dashboard/home.html#about">About Us</a></li>
-        <li><a href="../registerpage/register.html">Register</a></li>
-        <li><a href="login.html">Log In</a></li>
-      </ul>
-    </nav>
+            <ul>
+                <li><a href="../home_dashboard/home.html">Home</a></li>
+                <li><a href="../home_dashboard/home.html#about">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Register</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../registerpage_student/registerstudent.html">Student</a></li>
+                        <li><a href="../registerpage_tutor/registertutor.html">Tutor</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Log In</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../loginpage_student/loginstudent.html">Student</a></li>
+                        <li><a href="../loginpage_tutor/logintutor.html">Tutor</a></li>
+                    </ul>
+                </nav>
   </header>
-
   <div class="container">
-    <div class="sidebar">
-      <h2>Login as</h2>
-      <div class="role-buttons">
-        <button class="role-btn active" data-type="student">Student</button>
-        <button class="role-btn" data-type="tutor">Tutor</button>
-      </div>
-    </div>
-
+    
 <div class="login-box">
-  <h2 class="welcome">Welcome Back</h2>
+  <h2 class="welcome">Welcome Back, Tutor !</h2>
   <form action="login.php" method="POST" id="loginForm">
     <input type="hidden" name="role" id="roleInput" value="student" />
 
@@ -55,23 +57,10 @@
     </div>
 
     <button type="submit" class="login-btn">LOGIN</button>
-    <p class="create-link">Don't have an account? <a href="../registerpage/register.html">Create Account</a></p>
+    <p class="create-link">Don't have an account? <a href="../registerpage_tutor/registertutor.html">Create Account</a></p>
   </form>
 </div>
 
-<script>
-  const roleButtons = document.querySelectorAll('.role-btn');
-  const roleInput = document.getElementById('roleInput');
-
-  roleButtons.forEach(btn => {
-    btn.addEventListener('click', function () {
-      roleButtons.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      roleInput.value = this.dataset.type; // sets to "student" or "tutor"
-    });
-  });
-</script>
-
-
+</div>
 </body>
 </html>

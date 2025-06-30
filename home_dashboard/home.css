@@ -46,23 +46,67 @@ header {
     color: #2e2e2e;
 }
 
+/* Ensure nav ul is positioned relative */
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  position: relative;
+  margin-right: 50px; 
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  min-width: 130px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #5a00c4;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
 nav a {
-    text-decoration: none;
-    color: #2e2e2e;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: #2e2e2e;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s;
 }
 
 nav a:hover {
-    color: #5a00c4;
+  color: #5a00c4;
 }
+
 
 /* Hero Section */
 .hero {

@@ -1,0 +1,271 @@
+/* Reset and Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e2d0f9, #c9e4f5);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 80px;
+  width: auto;
+}
+
+.logo span {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #2e2e2e;
+}
+
+/* Ensure nav ul is positioned relative */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  position: relative;
+  margin-right: 50px; 
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  min-width: 130px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #5a00c4;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2e2e2e;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #5a00c4;
+}
+
+/* Main Container */
+.main-container {
+  display: flex;
+  min-height: calc(100vh - 100px); 
+  align-items: center;
+  padding: 20px;
+}
+
+/* Image Section */
+.image-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px;
+}
+
+.registration-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+/* Form Section */
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.form-wrapper h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #5a00c4;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #5a00c4;
+  color: white;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #45009d;
+}
+
+.login-text {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+.login-text a {
+  color: #5a00c4;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* Account Type Selection */
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .image-section {
+    padding: 20px;
+  }
+  
+  .registration-image {
+    max-height: 300px;
+  }
+  
+  .form-section {
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+/* Welcome Message Styling */
+.welcome-message {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-message h1 {
+  font-size: 2.5rem;
+  color: #5a00c4;
+  margin-bottom: 0;
+}
+
+/* Instruction Text Styling */
+.instruction-text {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.instruction-text p {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+/* Adjust Image Section Layout */
+.image-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .welcome-message h1 {
+    font-size: 2rem;
+  }
+  
+  .instruction-text p {
+    font-size: 1rem;
+  }
+  
+  .image-section {
+    padding: 20px;
+  }
+}
