@@ -28,7 +28,7 @@ header {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .logo img {
@@ -42,10 +42,53 @@ header {
   color: #2e2e2e;
 }
 
+/* Ensure nav ul is positioned relative */
 nav ul {
   list-style: none;
   display: flex;
   gap: 30px;
+  position: relative;
+  margin-right: 50px; 
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  min-width: 130px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #5a00c4;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
 nav a {
@@ -74,11 +117,11 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px;
+  padding: 10px;
 }
 
 .registration-image {
-  max-width: 100%;
+  max-width: 70%;
   max-height: 90vh;
   object-fit: contain;
 }
@@ -205,7 +248,7 @@ nav a:hover {
   }
   
   .form-section {
-    padding: 20px;
+    padding: 10px;
     width: 100%;
   }
 }
@@ -213,7 +256,7 @@ nav a:hover {
 /* Welcome Message Styling */
 .welcome-message {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
 }
 
 .welcome-message h1 {
@@ -225,7 +268,7 @@ nav a:hover {
 /* Instruction Text Styling */
 .instruction-text {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 5px;;
 }
 
 .instruction-text p {

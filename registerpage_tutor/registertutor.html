@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register - MyTutorHub</title>
-  <link rel="stylesheet" href="register.css" />
+  <link rel="stylesheet" href="registertutor.css" />
 </head>
 <body>
   <header>
@@ -13,22 +13,32 @@
       <span>MYTUTORHUB</span>
     </div>
     <nav>
-        <ul>
-            <li><a href="../home_dashboard/home.html">Home</a></li>
-            <li><a href="../home_dashboard/home.html#about">About Us</a></li>
-            <li><a href="register.html">Register</a></li> 
-            <li><a href="../loginpage/login.html">Log In</a></li>
-        </ul>
-    </nav>
+            <ul>
+                <li><a href="../home_dashboard/home.html">Home</a></li>
+                <li><a href="../home_dashboard/home.html#about">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Register</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../registerpage_student/registerstudent.html">Student</a></li>
+                        <li><a href="../registerpage_tutor/registertutor.html">Tutor</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Log In</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../loginpage_student/loginstudent.html">Student</a></li>
+                        <li><a href="../loginpage_tutor/logintutor.html">Tutor</a></li>
+                    </ul>
+                </nav>
   </header>
 
   <main class="main-container">
     <!-- Image Section -->
     <div class="image-section">
       <div class="welcome-message">
-        <h1>Welcome, New User!</h1>
+        <h1>Welcome, New Tutor!</h1>
       </div>
-      <img src="registericon.png" alt="Learning Illustration" class="registration-image">
+      <img src="registertutor.png" alt="Learning Illustration" class="registration-image">
       <div class="instruction-text">
         <p>Please fill the register form.</p>
       </div>
@@ -39,15 +49,6 @@
       <div class="form-wrapper">
         <h2>Create your account</h2>
         
-        <div class="account-type">
-          <div class="account-option active" data-type="student">
-            <span>Student</span>
-          </div>
-          <div class="account-option" data-type="tutor">
-            <span>Tutor</span>
-          </div>
-        </div>
-
         <div class="form-group">
           <label>Username</label>
           <input type="text" placeholder="Choose a username" />
@@ -73,21 +74,11 @@
         </div>
 
         <p class="login-text">
-          Already have an account? <a href="../loginpage/login.html">Log in</a>
+          Already have an account? <a href="../loginpage_tutor/logintutor.html">Log in</a>
         </p>
       </div>
     </div>
   </main>
 
-  <script>
-    document.querySelectorAll('.account-option').forEach(option => {
-      option.addEventListener('click', function() {
-        document.querySelectorAll('.account-option').forEach(opt => {
-          opt.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
-  </script>
 </body>
 </html>

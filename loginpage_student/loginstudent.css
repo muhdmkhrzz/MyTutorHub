@@ -42,10 +42,53 @@ header {
   color: #2e2e2e;
 }
 
+/* Ensure nav ul is positioned relative */
 nav ul {
   list-style: none;
   display: flex;
   gap: 30px;
+  position: relative;
+  margin-right: 50px; 
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  min-width: 130px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+  color: #5a00c4;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
 nav a {
@@ -63,62 +106,13 @@ nav a:hover {
 /* Layout Container */
 .container {
   display: flex;
+  justify-content: center;
+  align-items: center;;
   flex-wrap: wrap;
   justify-content: center;
   align-items: stretch;
   padding: 40px;
   min-height: calc(100vh - 100px);
-}
-
-/* Sidebar */
-.sidebar {
-  flex: 1 1 250px;
-  max-width: 300px;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 15px;
-  padding: 50px 20px;
-  margin-right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar h2 {
-  margin-top: 130px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 1.3rem;
-  color: #333;
-}
-
-.role-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-}
-
-.role-btn {
-  width: 100%;
-  height: 50px;              
-  padding: 100 16px;           
-  line-height: 10px;    
-  font-size: 16px;           
-  text-align: center;         
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  background-color: #ffffff;  
-  color: #333;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.role-btn.active,
-.role-btn:hover {
-  background-color: #5a00c4;
-  color: white;
-  border-color: #5a00c4;
 }
 
 /* Login Box */
