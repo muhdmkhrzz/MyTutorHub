@@ -19,6 +19,8 @@ $sql_stud = "SELECT * FROM stud WHERE stud_id = '$stud_id'";
 $result_stud = mysqli_query($conn, $sql_stud);
 if ($result_stud && mysqli_num_rows($result_stud) > 0) {
     $student = mysqli_fetch_assoc($result_stud);
+} else {
+    $student['error'] = "Student data not found.";
 }
 
 // Fetch classes
@@ -31,8 +33,12 @@ $sql_classes = "
     LIMIT 3
 ";
 $result_classes = mysqli_query($conn, $sql_classes);
-while ($row = mysqli_fetch_assoc($result_classes)) {
-    $classes[] = $row;
+if ($result_classes && mysqli_num_rows($result_classes) > 0) {
+    while ($row = mysqli_fetch_assoc($result_classes)) {
+        $classes[] = $row;
+    }
+} else {
+    $classes['empty'] = true;
 }
 
 // Fetch lessons booked by the student
@@ -47,8 +53,12 @@ $sql_lessons = "
     LIMIT 3
 ";
 $result_lessons = mysqli_query($conn, $sql_lessons);
-while ($row = mysqli_fetch_assoc($result_lessons)) {
-    $lessons[] = $row;
+if ($result_lessons && mysqli_num_rows($result_lessons) > 0) {
+    while ($row = mysqli_fetch_assoc($result_lessons)) {
+        $lessons[] = $row;
+    }
+} else {
+    $lessons['empty'] = true;
 }
 
 // Pass to HTML
