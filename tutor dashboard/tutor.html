@@ -37,8 +37,13 @@
             <p><?= htmlspecialchars($class['class_starttime']) ?> - <?= htmlspecialchars($class['class_endtime']) ?></p>
           </div>
         <?php endforeach; ?>
-      <?php else: ?>
-        <p>No classes scheduled.</p>
+      <?php else: ?> <!-- Popup Modal -->
+        <div id="popup" class="popup"> 
+          <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p>You have no class today.</p>
+          </div>
+        </div>
       <?php endif; ?>
     </div>
 
@@ -93,5 +98,17 @@
       </div>
     </div>
   </div>
+  <script>
+  window.onload = function () {
+    const popup = document.getElementById('popup');
+    if (popup) {
+      popup.style.display = 'block';
+    }
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+  </script>
 </body>
 </html>
