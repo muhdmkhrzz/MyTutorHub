@@ -1,4 +1,5 @@
 /* Updated CSS for Tutor Dashboard to match Student Dashboard style */
+/* Define CSS variables for consistent theming */
 :root {
     --primary-color: #7c4fe0; /* Purple from student dashboard */
     --secondary-color: #5e35b1; /* Darker purple */
@@ -15,47 +16,52 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Use Poppins font for a modern look */
     font-family: 'Poppins', sans-serif;
 }
 
 body {
     background: #f5f5fa;
-    color: #333;
+    color: var(--dark-color);
+    line-height: 1.6;
 }
 
-/* Dashboard Layout */
+/* Dashboard Layout using Flexbox */
 .dashboard-container {
     display: flex;
-    min-height: 100vh;
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
 }
 
-/* Sidebar - Matching Student Dashboard */
+/* Sidebar Styling - Matching Student Dashboard */
 .sidebar {
-    position: fixed;
+    position: fixed; /* Fixed position for sticky sidebar */
     width: 220px;
     height: 100vh;
     background: var(--sidebar-bg);
     padding: 30px 20px;
-    border-radius: 0 30px 30px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 30px 30px 0; /* Rounded right corners */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column;
 }
 
 .sidebar-header {
     padding: 0 0 30px 0;
     color: white;
+    text-align: center;
 }
 
 .sidebar-header h1 {
     font-size: 1.3rem;
     font-weight: 600;
-    text-align: center;
 }
 
 .welcome-message {
     padding: 15px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
     border-radius: 10px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .welcome-message h2 {
@@ -69,8 +75,12 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
+.sidebar-nav {
+    flex-grow: 1; /* Allows navigation to take available space */
+}
+
 .sidebar-nav ul {
-    list-style: none;
+    list-style: none; /* Remove bullet points */
 }
 
 .sidebar-nav li a {
@@ -80,16 +90,23 @@ body {
     color: white;
     margin: 8px 0;
     border-radius: 10px;
-    transition: all 0.3s ease;
+    text-decoration: none; /* Remove underline */
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
 }
 
 .sidebar-nav li a i {
     margin-right: 10px;
     font-size: 1.1rem;
+    width: 20px; /* Fixed width for icon to prevent text shifting */
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    flex-grow: 1; /* Allows text to take available space */
 }
 
 .sidebar-nav li a:hover {
-    color: #333;
+    color: var(--dark-color);
     background: white;
 }
 
@@ -97,13 +114,15 @@ body {
     background: white;
     color: var(--primary-color);
     font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for active state */
 }
 
-/* Main Content */
+/* Main Content Area */
 .main-content {
-    margin-left: 250px;
+    margin-left: 250px; /* Offset for the fixed sidebar */
     padding: 30px;
-    width: calc(100% - 250px);
+    width: calc(100% - 250px); /* Adjust width based on sidebar */
+    flex-grow: 1; /* Allows main content to fill remaining space */
 }
 
 .content-section {
@@ -111,7 +130,7 @@ body {
     background: white;
     border-radius: 20px;
     padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft shadow for sections */
 }
 
 .content-section h2 {
@@ -119,27 +138,32 @@ body {
     color: var(--primary-color);
     font-weight: 600;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eee; /* Separator line */
 }
 
-/* Schedule Cards - Matching Class Cards */
+/* Schedule Cards Layout */
 .schedule-cards {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: center; /* Center cards horizontally */
 }
 
 .class-card {
-    flex: 1;
-    min-width: 280px;
+    flex: 1; /* Allow cards to grow and shrink */
+    min-width: 280px; /* Minimum width for cards */
     background: var(--card-bg);
     border-radius: 20px;
     padding: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .class-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .class-card h3 {
@@ -159,36 +183,55 @@ body {
 .class-details i {
     margin-right: 8px;
     color: var(--primary-color);
-    width: 20px;
+    width: 20px; /* Fixed width for icon */
+    text-align: center;
 }
 
+/* General Button Styling */
 .btn {
     display: inline-block;
-    padding: 8px 20px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 25px; /* More rounded buttons */
     border: none;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
     font-size: 0.9rem;
+    text-align: center;
+    text-decoration: none; /* For anchor buttons */
 }
 
 .btn.view-btn {
     background: var(--primary-color);
     color: white;
-    width: 100%;
+    width: 100%; /* Full width button */
     margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3); /* Shadow for primary button */
 }
 
 .btn.view-btn:hover {
     background: var(--secondary-color);
+    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
 }
 
-/* My Classes Grid */
+.btn.manage-btn {
+    background: var(--accent-color);
+    color: white;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(161, 141, 240, 0.3);
+}
+
+.btn.manage-btn:hover {
+    background: var(--secondary-color);
+    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
+}
+
+/* My Classes Grid Layout */
 .my-classes-grid {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .class-tile {
@@ -199,6 +242,9 @@ body {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .class-tile:hover {
@@ -216,46 +262,159 @@ body {
     color: #555;
     margin-bottom: 15px;
     font-size: 0.9rem;
+    flex-grow: 1; /* Allows paragraph to take available space */
 }
 
 .class-tile.create-new {
-    background: rgba(230, 225, 255, 0.5);
-    border: 2px dashed var(--accent-color);
+    background: rgba(230, 225, 255, 0.5); /* Lighter background for 'create new' */
+    border: 2px dashed var(--accent-color); /* Dashed border */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    color: var(--primary-color);
+}
+
+.class-tile.create-new:hover {
+    background: rgba(230, 225, 255, 0.8);
+    border-color: var(--primary-color);
 }
 
 .class-tile.create-new i {
-    font-size: 1.5rem;
+    font-size: 2rem; /* Larger icon */
     color: var(--primary-color);
     margin-bottom: 10px;
 }
 
-/* Welcome Section - Matching Student Dashboard */
-.welcome-section {
-    background: var(--welcome-bg);
+/* Placeholder Content Styling */
+.placeholder-content {
+    background: #f0f0f5;
+    border-radius: 15px;
     padding: 20px;
-    border-radius: 20px;
-    margin-bottom: 30px;
+    text-align: center;
+    color: #777;
+    min-height: 150px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-.welcome-section h2 {
-    font-size: 1.3rem;
-    color: #333;
-    border: none;
-    margin: 0;
-    padding: 0;
+.placeholder-chart,
+.placeholder-resources {
+    width: 100%;
+    height: 100px;
+    background: #e0e0e8;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 0.9rem;
 }
 
-.welcome-section p {
-    font-size: 0.9rem;
+.placeholder-resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    height: auto;
+    padding: 10px;
+}
+
+.resource-item {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+
+/* Modal Styles - NEWLY ADDED */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top of everything */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Max width for larger screens */
+    animation-name: animatetop; /* Animation for modal entry */
+    animation-duration: 0.4s;
+}
+
+/* Modal Entry Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.close-modal {
+    color: #aaa;
+    position: absolute; /* Position relative to modal-content */
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.modal-details p {
+    margin-bottom: 10px;
+    font-size: 1rem;
     color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.modal-details i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+}
+
+.modal-content .close-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background: var(--primary-color);
+    color: white;
 }
 
 /* Responsive Design */
@@ -268,56 +427,122 @@ body {
     .sidebar-header h1, 
     .welcome-message,
     .sidebar-nav li a span {
-        display: none;
+        display: none; /* Hide text for compact sidebar */
     }
     
     .sidebar-nav li a {
-        justify-content: center;
+        justify-content: center; /* Center icons */
         padding: 15px 5px;
         margin: 5px 0;
     }
     
     .sidebar-nav li a i {
-        margin-right: 0;
+        margin-right: 0; /* Remove margin when text is hidden */
         font-size: 1.2rem;
     }
     
     .main-content {
-        margin-left: 100px;
+        margin-left: 100px; /* Adjust margin for smaller sidebar */
         width: calc(100% - 100px);
     }
 }
 
 @media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+
     .sidebar {
+        position: relative; /* No longer fixed */
         width: 100%;
         height: auto;
-        position: relative;
-        border-radius: 0;
+        border-radius: 0; /* Remove border-radius on small screens */
+        box-shadow: none;
+        padding: 20px;
     }
     
+    .sidebar-header h1,
+    .welcome-message {
+        display: block; /* Show header and welcome message */
+        text-align: left;
+    }
+
+    .sidebar-header h1 {
+        margin-bottom: 15px;
+    }
+
+    .welcome-message {
+        margin-bottom: 15px;
+    }
+
     .sidebar-nav ul {
-        display: flex;
-        overflow-x: auto;
+        display: flex; /* Horizontal navigation */
+        overflow-x: auto; /* Allow horizontal scrolling if needed */
         padding: 10px 0;
+        justify-content: space-around; /* Distribute links evenly */
     }
     
     .sidebar-nav li {
-        flex: 0 0 auto;
+        flex: 0 0 auto; /* Prevent items from shrinking */
+        margin: 0 5px; /* Add horizontal margin */
+    }
+
+    .sidebar-nav li a {
+        flex-direction: column; /* Stack icon and text */
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .sidebar-nav li a i {
+        margin-right: 0;
+        margin-bottom: 5px; /* Space between icon and text */
+        font-size: 1rem;
+    }
+
+    .sidebar-nav li a span {
+        display: block; /* Show text again */
     }
     
     .main-content {
-        margin-left: 0;
+        margin-left: 0; /* No left margin */
         width: 100%;
+        padding: 20px; /* Adjust padding */
     }
     
     .schedule-cards,
     .my-classes-grid {
-        flex-direction: column;
+        flex-direction: column; /* Stack cards vertically */
     }
     
     .class-card,
     .class-tile {
-        min-width: 100%;
+        min-width: 100%; /* Full width for cards */
+    }
+
+    .modal-content {
+        width: 95%; /* Slightly more width on very small screens */
+        padding: 20px;
+    }
+
+    .close-modal {
+        font-size: 24px;
+        top: 10px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-section {
+        padding: 15px;
+    }
+
+    .content-section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
     }
 }
