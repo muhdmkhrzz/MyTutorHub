@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTutorHub - Tutor Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>MyTutorHub</h1>
+            </div>
+            <div class="welcome-message">
+                <h2>Welcome back, Professor!</h2>
+                <p>Here's what's happening with your classes today.</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard-section" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#my-classes-section"><i class="fas fa-book-open"></i> My Classes</a></li>
+                    <li><a href="#student-overview-section"><i class="fas fa-users"></i> Student Overview</a></li>
+                    <li><a href="#resources-section"><i class="fas fa-folder"></i> Resources</a></li>
+                    <li><a href="#reports-section"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <h2>Today's Schedule</h2>
+                <div class="schedule-cards">
+                    <!-- Class Card 1 -->
+                    <div class="class-card">
+                        <h3>HCI - Unit 1</h3>
+                        <div class="class-details">
+                            <p><i class="fas fa-user-graduate"></i> 40 Students</p>
+                            <p><i class="far fa-calendar-alt"></i> 25 June 2025</p>
+                            <p><i class="far fa-clock"></i> 08:00 - 10:00</p>
+                        </div>
+                        <button class="btn view-btn">View Class</button>
+                    </div>
+                    
+                    <!-- Class Card 2 -->
+                    <div class="class-card">
+                        <h3>Data Structure</h3>
+                        <div class="class-details">
+                            <p><i class="fas fa-user-graduate"></i> 35 Students</p>
+                            <p><i class="far fa-calendar-alt"></i> 25 June 2025</p>
+                            <p><i class="far fa-clock"></i> 12:00 - 14:00</p>
+                        </div>
+                        <button class="btn view-btn">View Class</button>
+                    </div>
+                    
+                    <!-- Class Card 3 -->
+                    <div class="class-card">
+                        <h3>AI - Theory 1</h3>
+                        <div class="class-details">
+                            <p><i class="fas fa-user-graduate"></i> 25 Students</p>
+                            <p><i class="far fa-calendar-alt"></i> 25 June 2025</p>
+                            <p><i class="far fa-clock"></i> 15:00 - 17:00</p>
+                        </div>
+                        <button class="btn view-btn">View Class</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Classes Section -->
+            <section id="my-classes-section" class="content-section">
+                <h2>My Classes</h2>
+                <div class="my-classes-grid">
+                    <!-- Class 1 -->
+                    <div class="class-tile">
+                        <h3>HCI - Unit 1</h3>
+                        <p>User Interface and System Usability</p>
+                        <button class="btn manage-btn">Manage Class</button>
+                    </div>
+                    
+                    <!-- Class 2 -->
+                    <div class="class-tile">
+                        <h3>Data Structure</h3>
+                        <p>Data Organization and Manipulation</p>
+                        <button class="btn manage-btn">Manage Class</button>
+                    </div>
+                    
+                    <!-- Class 3 -->
+                    <div class="class-tile">
+                        <h3>AI - Theory 1</h3>
+                        <p>Intelligent Search and Logic Reasoning</p>
+                        <button class="btn manage-btn">Manage Class</button>
+                    </div>
+                    
+                    <!-- Create New Class -->
+                    <div class="class-tile create-new">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>Create Class</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Overview Section -->
+            <section id="student-overview-section" class="content-section">
+                <h2>Student Overview</h2>
+                <div class="placeholder-content">
+                    <p>Student statistics and overview will be displayed here.</p>
+                    <div class="placeholder-chart"></div>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources-section" class="content-section">
+                <h2>Resources</h2>
+                <div class="placeholder-content">
+                    <p>Teaching resources and materials will be displayed here.</p>
+                    <div class="placeholder-resources">
+                        <div class="resource-item">Lecture Slides</div>
+                        <div class="resource-item">Reading Materials</div>
+                        <div class="resource-item">Assignment Templates</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="content-section">
+                <h2>Reports</h2>
+                <div class="placeholder-content">
+                    <p>Class performance reports will be displayed here.</p>
+                    <div class="placeholder-chart"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
