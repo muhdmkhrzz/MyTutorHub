@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <img src="mytutorhub_logo.png" class="logo" alt="Logo" style="width: 200px; height: auto;">
+        <a href="#main-content">Dashboard</a>
+        <a href="#classes-section">My Bookings</a>
+        <a href="#lessons-section">Available Lessons</a>
+        <a href="../logout.php">Logout</a>
+    </div>
+
+    <div class="main-content">
+      <div class="search-bar">
+        <input type="text" id="class-search" placeholder="Search for classes...">
+        <span id="current-date"></span>
+      </div>
+      <script>
+        // Simple client-side search for classes
+        document.getElementById('class-search').addEventListener('input', function() {
+          const query = this.value.toLowerCase();
+          const cards = document.querySelectorAll('.classes-grid .class-card:not(.template)');
+          cards.forEach(card => {
+            const title = card.querySelector('.class_title').textContent.toLowerCase();
+            const tutor = card.querySelector('.tutor_name').textContent.toLowerCase();
+            if (title.includes(query) || tutor.includes(query)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      </script>
+
+        <div class="welcome-panel">
+            <div class="text">
+                <h2>Welcome back, <span id="stud_name">Student</span>!</h2><br>
+                <p>New classes are available. Learn more about HTML and CSS.</p><br>
+                <button>Buy Lesson</button><br>
+            </div>
+            <img src="../img/profile.jpg" alt="Profile">
+        </div>
+
+        <!-- Classes Section -->
+        <section class="classes-section">
+            <h2>Today's Classes</h2>
+            <div class="classes-grid" id="classes-container">
+                <!-- Class cards will be inserted here by JavaScript -->
+                <article class="class-card template">
+                    <h3 class="class_title">Sample Class</h3><br>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">01 Jan 2023</span></p><br>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">10:00 - 11:30</span></p><br>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">John Doe</span></p><br>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <br>
+        <br>
+
+        <!-- Lessons Section -->
+        <section class="lessons-section">
+            <h2>Lessons</h2>
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Tutor</th>
+                        <th>Date & Time</th>
+                        <th>Fee</th>
+                        <th>Capacity</th>
+                    </tr>
+                </thead>
+                <tbody id="lessons-container">
+                    <!-- Lessons will be inserted here by JavaScript -->
+                    <tr class="template">
+                        <td class="lesson-title">Sample Lesson</td>
+                        <td class="lesson-tutor">Jane Smith</td>
+                        <td class="lesson-datetime">
+                            <span class="lesson-date">01 Jan 2023</span><br>
+                            <span class="lesson-time">14:00-15:30</span>
+                        </td>
+                        <td class="class_fee">RM30</td>
+                        <td class="class_capacity">17/20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        // This would be replaced with actual data fetching in a real implementation
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    </script>
+</body>
+</html>
