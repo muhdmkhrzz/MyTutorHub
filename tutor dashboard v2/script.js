@@ -1,123 +1,140 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // --- Data object for class details ---
-    const classData = {
-        "HCI - Unit 1": {
-            topic: "Usability",
-            date: "25 June 2025",
-            time: "08:00–10:00",
-            students: 40,
-            material: "chapter 1.pdf",
-            material_url: "path/to/chapter 1.pdf" // Placeholder: Replace with the actual file path
-        },
-        "Data Structure": {
-            topic: "Grammar",
-            date: "25 June 2025",
-            time: "12:00–14:00",
-            students: 35,
-            material: "grammar v1.pdf",
-            material_url: "path/to/grammar v1.pdf" // Placeholder: Replace with the actual file path
-        },
-        "AI - Theory 1": {
-            topic: "Algorithm",
-            date: "25 June 2025",
-            time: "15:00–17:00",
-            students: 25,
-            material: "algorithm in AI.pdf",
-            material_url: "path/to/algorithm in AI.pdf" // Placeholder: Replace with the actual file path
-        }
-    };
+document.addEventListener('DOMContentLoaded', () => {
+    const editIcons = document.querySelectorAll('.edit-icon');
+    const deleteIcons = document.querySelectorAll('.delete-icon');
+    const editClassModal = document.getElementById('editClassModal');
+    const confirmationModal = document.getElementById('confirmationModal');
+    const messageModal = document.getElementById('messageModal'); // New message modal
+    const messageText = document.getElementById('messageText'); // Text element for message modal
+    const messageModalClose = document.getElementById('messageModalClose'); // Close button for message modal
+    const messageModalOkButton = document.getElementById('messageModalOkButton'); // OK button for message modal
 
-    // --- Smooth scrolling and active link highlighting ---
-    document.querySelectorAll('.sidebar-nav a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.classList.remove('active');
-            });
-            this.classList.add('active');
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // --- Class modal functionality ---
-    const modal = document.getElementById('class-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const closeBtn = document.querySelector('.close-btn');
-    
-    // Open modal when 'View Class' button is clicked
-    document.querySelectorAll('.view-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const classCard = this.closest('.class-card');
-            const classTitle = classCard.querySelector('h3').textContent.trim();
-            const data = classData[classTitle];
-            
-            if (data) {
-                document.getElementById('modal-class-title').textContent = classTitle;
-                document.getElementById('modal-class-topic').textContent = data.topic;
-                document.getElementById('modal-class-date').textContent = data.date;
-                document.getElementById('modal-class-time').textContent = data.time;
-                document.getElementById('modal-class-students').textContent = data.students;
-                
-                const materialLink = document.getElementById('modal-material-link');
-                materialLink.textContent = data.material + ' [Download]';
-                materialLink.href = data.material_url;
-                
-                if (modal) {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            } else {
-                console.error("Error: No data found for class '" + classTitle + "'.");
-            }
-        });
-    });
-    
-    // Function to close the modal
-    function hideModal() {
-        if (modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+    const closeModalButtons = document.querySelectorAll('.close-button'); // All close buttons (x)
+    const editClassForm = document.getElementById('editClassForm');
+    const editClassId = document.getElementById('editClassId');
+    const classNameInput = document.getElementById('className');
+    const classTopicInput = document.getElementById('classTopic');
+    const classMaterialsInput = document.getElementById('classMaterials');
+    const yesCancelButton = document.getElementById('yesCancelButton');
+    const noKeepButton = document.getElementById('noKeepButton');
+    const createClassButton = document.querySelector('.create-class-button'); // Create Class button
+
+    let classToDelete = null; // To store the card element to be deleted
+
+    // Function to show the custom message modal
+    function showMessageModal(message) {
+        messageText.textContent = message;
+        messageModal.style.display = 'flex';
     }
 
-    // Event listeners to close the modal
-    if (closeModal) {
-        closeModal.addEventListener('click', hideModal);
-    }
-    if (closeBtn) {
-        closeBtn.addEventListener('click', hideModal);
-    }
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            hideModal();
+    // Event listener for Create Class button (placeholder)
+    createClassButton.addEventListener('click', () => {
+        showMessageModal('Create Class functionality coming soon!');
+        // In a real application, you would open a form to add a new class here.
+    });
+
+    // Event listener for Edit icons
+    editIcons.forEach(icon => {
+        icon.addEventListener('click', (event) => {
+            const classCard = event.target.closest('.class-card');
+            const classId = classCard.dataset.classId;
+            const title = classCard.querySelector('.class-title').textContent;
+            const description = classCard.querySelector('.class-description').textContent;
+
+            // Populate the form
+            editClassId.value = classId;
+            classNameInput.value = title;
+            classTopicInput.value = description;
+            // For materials, you'd typically fetch actual materials from a data source.
+            // For this example, we'll leave it blank or pre-fill with a placeholder.
+            classMaterialsInput.value = "Add materials here (e.g., PDF, Links)"; // Placeholder
+
+            editClassModal.style.display = 'flex'; // Show the modal
+        });
+    });
+
+    // Event listener for Delete icons
+    deleteIcons.forEach(icon => {
+        icon.addEventListener('click', (event) => {
+            classToDelete = event.target.closest('.class-card');
+            confirmationModal.style.display = 'flex'; // Show the confirmation modal
+        });
+    });
+
+    // Event listener for "Yes, cancel" button
+    yesCancelButton.addEventListener('click', () => {
+        if (classToDelete) {
+            classToDelete.remove(); // Remove the class card from the DOM
+            classToDelete = null; // Reset
+            confirmationModal.style.display = 'none'; // Hide the modal
+            showMessageModal('Class cancelled successfully!'); // Use custom message modal
         }
     });
-    
-    // --- Highlight active section while scrolling ---
-    const sections = document.querySelectorAll('.content-section');
-    const navLinks = document.querySelectorAll('.sidebar-nav a');
-    
-    window.addEventListener('scroll', function() {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= (sectionTop - 100)) {
-                current = section.getAttribute('id');
+
+    // Event listener for "No, keep it" button
+    noKeepButton.addEventListener('click', () => {
+        classToDelete = null; // Reset
+        confirmationModal.style.display = 'none'; // Hide the modal
+    });
+
+    // Close modals when clicking on the close button (x)
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Check which modal the close button belongs to
+            if (button.closest('#editClassModal')) {
+                editClassModal.style.display = 'none';
+            } else if (button.closest('#confirmationModal')) {
+                confirmationModal.style.display = 'none';
             }
+            // The messageModalClose button is handled separately below
         });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+    });
+
+    // Close message modal when its 'x' button or 'OK' button is clicked
+    messageModalClose.addEventListener('click', () => {
+        messageModal.style.display = 'none';
+    });
+
+    messageModalOkButton.addEventListener('click', () => {
+        messageModal.style.display = 'none';
+    });
+
+
+    // Close modals when clicking outside the modal content
+    window.addEventListener('click', (event) => {
+        // Check if the click target is the modal itself and not inside its content
+        if (event.target === editClassModal) {
+            editClassModal.style.display = 'none';
+        }
+        if (event.target === confirmationModal) {
+            confirmationModal.style.display = 'none';
+        }
+        if (event.target === messageModal) {
+            messageModal.style.display = 'none';
+        }
+    });
+
+    // Handle Edit Class Form Submission
+    editClassForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        const updatedClassId = editClassId.value;
+        const updatedClassName = classNameInput.value;
+        const updatedClassTopic = classTopicInput.value;
+        const updatedClassMaterials = classMaterialsInput.value; // Not used in UI update, but captured
+
+        // Find the corresponding class card and update its content
+        const classCardToUpdate = document.querySelector(`.class-card[data-class-id="${updatedClassId}"]`);
+        if (classCardToUpdate) {
+            classCardToUpdate.querySelector('.class-title').textContent = updatedClassName;
+            classCardToUpdate.querySelector('.class-description').textContent = updatedClassTopic;
+            // In a real application, you would send this data to a backend.
+            console.log(`Class ID: ${updatedClassId}`);
+            console.log(`Updated Class Name: ${updatedClassName}`);
+            console.log(`Updated Topic: ${updatedClassTopic}`);
+            console.log(`Updated Materials: ${updatedClassMaterials}`);
+        }
+
+        editClassModal.style.display = 'none'; // Hide the modal after submission
+        showMessageModal('Class updated successfully!'); // Use custom message modal
     });
 });
