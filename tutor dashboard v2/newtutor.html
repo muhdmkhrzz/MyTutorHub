@@ -140,7 +140,7 @@
         </main>
     </div>
 
-    <!-- Class Modal Structure - This was missing and caused errors -->
+    <!-- UPDATED Class Modal Structure -->
     <div id="class-modal" class="modal">
         <div class="modal-content">
             <!-- Close button for the modal -->
@@ -148,11 +148,12 @@
             <!-- Dynamic content for the modal -->
             <h2 id="modal-class-title"></h2>
             <div class="modal-details">
+                <p><i class="fas fa-book-reader"></i> Topic: <span id="modal-class-topic"></span></p>
                 <p><i class="far fa-calendar-alt"></i> Date: <span id="modal-class-date"></span></p>
                 <p><i class="far fa-clock"></i> Time: <span id="modal-class-time"></span></p>
                 <p><i class="fas fa-user-graduate"></i> Students: <span id="modal-class-students"></span></p>
+                <p><i class="fas fa-file-alt"></i> Material: <a href="#" id="modal-material-link" class="material-download-link" download>[Download]</a></p>
             </div>
-            <!-- Button to close the modal -->
             <button class="btn close-btn">Close</button>
         </div>
     </div>
