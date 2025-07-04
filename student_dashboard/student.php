@@ -30,8 +30,7 @@ $sql_classes = "SELECT c.class_title, c.class_date, c.class_starttime, c.class_e
                c.class_capacity, t.tutor_name
                FROM class c
                JOIN tutor t ON c.tutor_id = t.tutor_id
-               ORDER BY c.class_date ASC
-               LIMIT 3";
+               ORDER BY c.class_date ASC";
 $result_classes = $conn->query($sql_classes);
 if ($result_classes && $result_classes->num_rows > 0) {
     while ($row = $result_classes->fetch_assoc()) {
@@ -47,8 +46,7 @@ $sql_lessons = "SELECT c.class_title, t.tutor_name, b.booking_date,
                JOIN class c ON b.class_id = c.class_id
                JOIN tutor t ON c.tutor_id = t.tutor_id
                WHERE b.stud_id = ?
-               ORDER BY b.booking_date DESC
-               LIMIT 3";
+               ORDER BY b.booking_date DESC";
 $stmt = $conn->prepare($sql_lessons);
 $stmt->bind_param("i", $stud_id);
 $stmt->execute();

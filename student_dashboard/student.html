@@ -8,101 +8,282 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="sidebar">
-        <img src="mytutorhub_logo.png" class="logo" alt="Logo" style="width: 200px; height: auto;">
-        <a href="#main-content">Dashboard</a>
-        <a href="#classes-section">My Bookings</a>
-        <a href="#lessons-section">Available Lessons</a>
-        <a href="../logout.php">Logout</a>
-    </div>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
 
-    <div class="main-content">
-      <div class="search-bar">
-        <input type="text" id="class-search" placeholder="Search for classes...">
-        <span id="current-date"></span>
-      </div>
-      <script>
-        // Simple client-side search for classes
-        document.getElementById('class-search').addEventListener('input', function() {
-          const query = this.value.toLowerCase();
-          const cards = document.querySelectorAll('.classes-grid .class-card:not(.template)');
-          cards.forEach(card => {
-            const title = card.querySelector('.class_title').textContent.toLowerCase();
-            const tutor = card.querySelector('.tutor_name').textContent.toLowerCase();
-            if (title.includes(query) || tutor.includes(query)) {
-              card.style.display = '';
-            } else {
-              card.style.display = 'none';
-            }
-          });
-        });
-      </script>
+    <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+        <img src="mytutorhub_logo.png" class="logo" alt="MyTutorHub Logo" loading="lazy">
+        <a href="#main-content" class="active"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="#classes-section"><i class="fas fa-calendar-check"></i> My Bookings</a>
+        <a href="#lessons-section"><i class="fas fa-book-open"></i> Available Lessons</a>
+        <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+
+    <div class="main-content" id="main-content">
+        <div class="search-bar">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="class-search" placeholder="Search for classes..." aria-label="Search classes">
+            </div>
+            <span id="current-date" aria-live="polite"></span>
+        </div>
 
         <div class="welcome-panel">
             <div class="text">
-                <h2>Welcome back, <span id="stud_name">Student</span>!</h2><br>
-                <p>New classes are available. Learn more about HTML and CSS.</p><br>
-                <button>Buy Lesson</button><br>
+                <h2>Welcome back, <span id="stud_name">Student</span>!</h2>
+                <p>New classes are available. Learn more about HTML and CSS.</p>
+                <button id="buy-lesson-btn" class="primary-btn">Buy Lesson</button>
             </div>
-            <img src="../img/profile.jpg" alt="Profile">
+            <img src="../img/profile.jpg" alt="Profile picture" loading="lazy">
         </div>
 
+        <!-- Buy Lesson Popup -->
+        <div id="buy-lesson-popup" class="popup-overlay" style="display: none;">
+            <div class="popup-content">
+            <h3>Buy Lesson</h3>
+            <p>Are you sure you want to buy this lesson?</p>
+            <div class="lesson-details">
+                <p><strong>Lesson:</strong> <span class="class_title">HTML & CSS Basics</span></p>
+                <p><strong>Price:</strong> <span class="class_fee">RM30</span></p>
+                <p><strong>Tutor:</strong> <span class="class_tutor">Jane Smith</span></p>
+                <p><strong>Date:</strong> <span class="class_date">01 Jan 2023</span></p>
+            </div>
+            <div class="popup-actions">
+                <button id="confirm-buy-btn" class="primary-btn">Confirm</button>
+                <button id="close-popup-btn" class="secondary-btn">Cancel</button>
+            </div>
+            </div>
+        </div>
+        <script>
+        // Popup logic
+        const buyLessonBtn = document.getElementById('buy-lesson-btn');
+        const popup = document.getElementById('buy-lesson-popup');
+        const closePopupBtn = document.getElementById('close-popup-btn');
+        const confirmBuyBtn = document.getElementById('confirm-buy-btn');
+        const notification = document.getElementById('notification');
+
+        buyLessonBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+
+        closePopupBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+        confirmBuyBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+            notification.textContent = 'Lesson purchased successfully!';
+            notification.style.display = 'block';
+            setTimeout(() => {
+            notification.style.display = 'none';
+            }, 2000);
+        });
+
+        // Optional: close popup when clicking outside content
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+            popup.style.display = 'none';
+            }
+        });
+        </script>
+
         <!-- Classes Section -->
-        <section class="classes-section">
-            <h2>Today's Classes</h2>
+        <section class="classes-section" id="classes-section">
+            <div class="section-header">
+                <h2>My Classes</h2>
+                <a href="view-classes.html" class="view-all-btn" id="view-all-classes" aria-expanded="false">
+                    View All Classes
+                </a>
+                </button>
+            </div>
+            
             <div class="classes-grid" id="classes-container">
                 <!-- Class cards will be inserted here by JavaScript -->
-                <article class="class-card template">
-                    <h3 class="class_title">Sample Class</h3><br>
+                <article class="class-card">
+                    <h3 class="class_title">HTML Basics</h3>
                     <div class="class_description">
-                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">01 Jan 2023</span></p><br>
-                        <p><i class="far fa-clock"></i> <span class="class_starttime">10:00 - 11:30</span></p><br>
-                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">John Doe</span></p><br>
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">15 Jun 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">09:00 - 10:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Sarah Johnson</span></p>
+                        <button class="review-btn" onclick="openReviewPopup('HTML Basics', 'Sarah Johnson')">Leave Review</button>
+
+                        <!-- Review Popup -->
+                        <div class="popup-overlay" id="review-popup" style="display: none;">
+                            <div class="popup-content">
+                                <h3>Leave a Review</h3>
+                                <p><strong>Class:</strong> <span id="review-class-title"></span></p>
+                                <p><strong>Tutor:</strong> <span id="review-tutor-name"></span></p>
+                                <div class="star-rating" id="star-rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <textarea id="review-text" rows="3" placeholder="Write your feedback..."></textarea>
+                                <div class="popup-actions">
+                                    <button class="primary-btn" id="submit-review-btn">Submit</button>
+                                    <button class="secondary-btn" id="close-review-popup-btn">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                        // Review Popup Logic
+                        function openReviewPopup(classTitle, tutorName) {
+                            document.getElementById('review-class-title').textContent = classTitle;
+                            document.getElementById('review-tutor-name').textContent = tutorName;
+                            document.getElementById('review-popup').style.display = 'flex';
+                            resetStars();
+                            document.getElementById('review-text').value = '';
+                        }
+
+                        function closeReviewPopup() {
+                            document.getElementById('review-popup').style.display = 'none';
+                        }
+
+                        function resetStars() {
+                            document.querySelectorAll('#star-rating .star').forEach(star => {
+                                star.classList.remove('selected');
+                            });
+                        }
+
+                        // Star rating logic
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const stars = document.querySelectorAll('#star-rating .star');
+                            let selectedRating = 0;
+
+                            stars.forEach(star => {
+                                star.addEventListener('click', function() {
+                                    selectedRating = parseInt(this.getAttribute('data-value'));
+                                    stars.forEach((s, i) => {
+                                        if (i < selectedRating) {
+                                            s.classList.add('selected');
+                                        } else {
+                                            s.classList.remove('selected');
+                                        }
+                                    });
+                                });
+                            });
+
+                            document.getElementById('close-review-popup-btn').onclick = closeReviewPopup;
+
+                            document.getElementById('submit-review-btn').onclick = function() {
+                                closeReviewPopup();
+                                document.getElementById('notification').textContent = 'Thank you for your review!';
+                                document.getElementById('notification').style.display = 'block';
+                                setTimeout(() => {
+                                    document.getElementById('notification').style.display = 'none';
+                                }, 2000);
+                            };
+                        });
+                        </script>
+                        <style>
+                        .star-rating .star {
+                            font-size: 2em;
+                            color: #ccc;
+                            cursor: pointer;
+                            transition: color 0.2s;
+                        }
+                        .star-rating .star.selected {
+                            color: #FFD700;
+                        }
+                        #review-popup .popup-content {
+                            max-width: 350px;
+                        }
+                        #review-popup textarea {
+                            width: 100%;
+                            margin: 10px 0;
+                            resize: vertical;
+                        }
+                        </style>
+                    </div>
+                </article>
+                
+                <article class="class-card">
+                    <h3 class="class_title">CSS Styling</h3>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">16 Jun 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">11:00 - 12:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Mike Chen</span></p>
+                        <button class="review-btn">Leave Review</button>
+                    </div>
+                </article>
+                
+                <article class="class-card hidden-item">
+                    <h3 class="class_title">JavaScript Fundamentals</h3>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">17 Jun 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">14:00 - 15:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">David Wilson</span></p>
+                        <button class="review-btn">Leave Review</button>
                     </div>
                 </article>
             </div>
         </section>
-        <br>
-        <br>
 
         <!-- Lessons Section -->
-        <section class="lessons-section">
-            <h2>Lessons</h2>
-            <table class="lessons-table">
-                <thead>
-                    <tr>
-                        <th>Class</th>
-                        <th>Tutor</th>
-                        <th>Date & Time</th>
-                        <th>Fee</th>
-                        <th>Capacity</th>
-                    </tr>
-                </thead>
-                <tbody id="lessons-container">
-                    <!-- Lessons will be inserted here by JavaScript -->
-                    <tr class="template">
-                        <td class="lesson-title">Sample Lesson</td>
-                        <td class="lesson-tutor">Jane Smith</td>
-                        <td class="lesson-datetime">
-                            <span class="lesson-date">01 Jan 2023</span><br>
-                            <span class="lesson-time">14:00-15:30</span>
-                        </td>
-                        <td class="class_fee">RM30</td>
-                        <td class="class_capacity">17/20</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section class="lessons-section" id="lessons-section">
+            <div class="section-header">
+                <h2>Available Lessons</h2>
+                <a href="view-lessons.html" class="view-all-btn" id="view-all-lessons" aria-expanded="false">
+                    View All Classes
+                </a>
+            </div>
+            
+            <div class="table-container">
+                <table class="lessons-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Tutor</th>
+                            <th>Date & Time</th>
+                            <th>Fee</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lessons-container">
+                        <tr>
+                            <td class="lesson-title">HTML Basics</td>
+                            <td class="lesson-tutor">Sarah Johnson</td>
+                            <td class="lesson-datetime">
+                                <span class="lesson-date">15 Jun 2023</span>
+                                <span class="lesson-time">09:00-10:30</span>
+                            </td>
+                            <td class="class_fee">RM30</td>
+                            <td><button class="book-btn">Book Now</button></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="lesson-title">CSS Styling</td>
+                            <td class="lesson-tutor">Mike Chen</td>
+                            <td class="lesson-datetime">
+                                <span class="lesson-date">16 Jun 2023</span>
+                                <span class="lesson-time">11:00-12:30</span>
+                            </td>
+                            <td class="class_fee">RM35</td>
+                            <td><button class="book-btn">Book Now</button></td>
+                        </tr>
+                        
+                        <tr class="hidden-item">
+                            <td class="lesson-title">JavaScript Fundamentals</td>
+                            <td class="lesson-tutor">David Wilson</td>
+                            <td class="lesson-datetime">
+                                <span class="lesson-date">17 Jun 2023</span>
+                                <span class="lesson-time">14:00-15:30</span>
+                            </td>
+                            <td class="class_fee">RM40</td>
+                            <td><button class="book-btn">Book Now</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
 
-    <script>
-        // This would be replaced with actual data fetching in a real implementation
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    </script>
+    <!-- Notification Element -->
+    <div id="notification" class="notification" aria-live="polite"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
