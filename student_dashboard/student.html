@@ -6,6 +6,13 @@
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="student.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Added for side-by-side buttons in class-card */
+        .class-card .class_description button {
+            margin-right: 10px; /* Adjust spacing between buttons */
+            margin-bottom: 5px; /* For responsiveness on smaller screens */
+        }
+    </style>
 </head>
 <body>
     <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -13,12 +20,10 @@
     </button>
 
     <nav class="sidebar" id="sidebar" aria-label="Main navigation">
-        <!-- Using a placeholder image as mytutorhub_logo.png is not provided -->
-        <img src="https://placehold.co/180x60/c9c1f2/7c4fe0?text=MyTutorHub" class="logo" alt="MyTutorHub Logo" loading="lazy">
+        <img src="mytutorhub_logo.png" class="logo" alt="MyTutorHub Logo" loading="lazy">
         <a href="#main-content" class="active"><i class="fas fa-home"></i> Dashboard</a>
         <a href="#classes-section"><i class="fas fa-calendar-check"></i> My Bookings</a>
-        <a href="#available-classes-section"><i class="fas fa-book-open"></i> Available Classes</a> <!-- Changed text -->
-        <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="#available-classes-section"><i class="fas fa-book-open"></i> Available Classes</a> <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
     <div class="main-content" id="main-content">
@@ -32,18 +37,12 @@
 
         <div class="welcome-panel">
             <div class="text">
-                <!-- PHP will inject student name here -->
-                <h2>Welcome back, <span id="stud_name"><?php echo htmlspecialchars($student['stud_name'] ?? 'Student'); ?></span>!</h2>
+                <h2>Welcome back, <span id="stud_name">Student</span>!</h2>
                 <p>New classes are available. Learn more about HTML and CSS.</p>
-                <!-- This button's functionality is not directly tied to booking a specific class here,
-                     it's more of a general call to action. The actual booking happens from the table below. -->
                 <button id="buy-lesson-btn" class="primary-btn">Buy Lesson</button>
             </div>
-            <!-- Using a placeholder image as image_95a07a.jpg is not provided -->
-            <img src="https://placehold.co/100x100/d9d2fc/7c4fe0?text=User" alt="User Avatar" loading="lazy">
         </div>
 
-        <!-- Buy Lesson Popup (general purpose, not directly used for class booking now) -->
         <div id="buy-lesson-popup" class="popup-overlay" style="display: none;">
             <div class="popup-content">
             <h3>Buy Lesson</h3>
@@ -61,50 +60,49 @@
             </div>
         </div>
 
-        <!-- My Bookings Section (formerly Classes Section) -->
         <section class="classes-section" id="classes-section">
             <div class="section-header">
-                <h2>My Bookings</h2> <!-- Changed text -->
-                <a href="view-all-bookings.php" class="view-all-btn" id="view-all-classes" aria-expanded="false">
+                <h2>My Bookings</h2> <a href="view-all-bookings.html" class="view-all-btn" id="view-all-classes" aria-expanded="false">
                     View All Bookings
                 </a>
             </div>
             
             <div class="classes-grid" id="booked-classes-container">
-                <?php if (!empty($booked_classes)): ?>
-                    <?php foreach ($booked_classes as $class): ?>
-                        <article class="class-card">
-                            <h3 class="class_title"><?php echo htmlspecialchars($class['class_title']); ?></h3>
-                            <div class="class_description">
-                                <p><i class="far fa-calendar-alt"></i> <span class="class_date"><?php echo htmlspecialchars(date('d M Y', strtotime($class['booking_date']))); ?></span></p>
-                                <p><i class="far fa-clock"></i> <span class="class_starttime"><?php echo htmlspecialchars(date('H:i', strtotime($class['class_starttime']))) . ' - ' . htmlspecialchars(date('H:i', strtotime($class['class_endtime']))); ?></span></p>
-                                <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name"><?php echo htmlspecialchars($class['tutor_name']); ?></span></p>
-                                <button class="review-btn" onclick="openRatingPopup(
-                                    '<?php echo htmlspecialchars($class['class_title']); ?>',
-                                    '<?php echo htmlspecialchars($class['tutor_name']); ?>',
-                                    <?php echo htmlspecialchars($class['class_id']); ?>,
-                                    <?php echo htmlspecialchars($stud_id); ?>
-                                )">Rate Class</button>
-                                <?php if (isset($class['tutor_rating']) && $class['tutor_rating'] !== null): ?>
-                                    <p class="tutor-rating-display">Your Tutor Rating: <?php echo htmlspecialchars($class['tutor_rating']); ?> <i class="fas fa-star"></i></p>
-                                <?php endif; ?>
-                                <?php if (isset($class['class_rating']) && $class['class_rating'] !== null): ?>
-                                    <p class="class-rating-display">Your Class Rating: <?php echo htmlspecialchars($class['class_rating']); ?> <i class="fas fa-star"></i></p>
-                                <?php endif; ?>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No booked classes found.</p>
-                <?php endif; ?>
+                <article class="class-card">
+                    <h3 class="class_title">HTML Basics</h3>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">15 Jun 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">09:00 - 10:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Sarah Johnson</span></p>
+                        <button class="review-btn" onclick="openRatingPopup('HTML Basics', 'Sarah Johnson', 101, 1)">Rate Class</button>
+                        <button class="review-btn" onclick="openTutorRatingPopup('Sarah Johnson', 1)">Rate Tutor</button>
+                    </div>
+                </article>
+                <article class="class-card">
+                    <h3 class="class_title">CSS Fundamentals</h3>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">20 Jul 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">11:00 - 12:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">David Lee</span></p>
+                        <button class="review-btn" onclick="openRatingPopup('CSS Fundamentals', 'David Lee', 102, 1)">Rate Class</button>
+                        <button class="review-btn" onclick="openTutorRatingPopup('David Lee', 2)">Rate Tutor</button>
+                    </div>
+                </article>
+                <article class="class-card">
+                    <h3 class="class_title">JavaScript Intro</h3>
+                    <div class="class_description">
+                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">01 Aug 2023</span></p>
+                        <p><i class="far fa-clock"></i> <span class="class_starttime">14:00 - 15:30</span></p>
+                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Emily White</span></p>
+                        <button class="review-btn" onclick="openRatingPopup('JavaScript Intro', 'Emily White', 103, 1)">Rate Class</button>
+                        <button class="review-btn" onclick="openTutorRatingPopup('Emily White', 3)">Rate Tutor</button>
+                    </div>
+                </article>
             </div>
         </section>
 
-        <!-- Available Classes Section (formerly Lessons Section) -->
-        <section class="lessons-section" id="available-classes-section"> <!-- Changed ID -->
-            <div class="section-header">
-                <h2>Available Classes</h2> <!-- Changed text -->
-                <a href="view-all-available-classes.php" class="view-all-btn" id="view-all-lessons" aria-expanded="false">
+        <section class="lessons-section" id="available-classes-section"> <div class="section-header">
+                <h2>Available Classes</h2> <a href="view-all-available-classes.html" class="view-all-btn" id="view-all-lessons" aria-expanded="false">
                     View All Classes
                 </a>
             </div>
@@ -115,54 +113,57 @@
                         <tr>
                             <th>Class</th>
                             <th>Tutor</th>
-                            <th>Tutor Rating</th> <!-- New Column -->
                             <th>Date & Time</th>
                             <th>Fee</th>
                             <th>Capacity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="available-classes-container"> <!-- Changed ID -->
-                        <?php if (!empty($available_classes)): ?>
-                            <?php foreach ($available_classes as $class): ?>
-                                <tr>
-                                    <td class="lesson-title"><?php echo htmlspecialchars($class['class_title']); ?></td>
-                                    <td class="lesson-tutor"><?php echo htmlspecialchars($class['tutor_name']); ?></td>
-                                    <td class="tutor-avg-rating">
-                                        <?php if ($class['tutor_avg_rating'] !== null): ?>
-                                            <?php echo number_format($class['tutor_avg_rating'], 1); ?> <i class="fas fa-star"></i>
-                                        <?php else: ?>
-                                            N/A
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="lesson-datetime">
-                                        <span class="lesson-date"><?php echo htmlspecialchars(date('d M Y', strtotime($class['class_date']))); ?></span>
-                                        <span class="lesson-time"><?php echo htmlspecialchars(date('H:i', strtotime($class['class_starttime']))) . ' - ' . htmlspecialchars(date('H:i', strtotime($class['class_endtime']))); ?></span>
-                                    </td>
-                                    <td class="class_fee">RM<?php echo htmlspecialchars(number_format($class['class_fee'], 2)); ?></td>
-                                    <td class="class_capacity"><?php echo htmlspecialchars($class['class_capacity']); ?></td>
-                                    <td>
-                                        <button class="book-btn" onclick="openBookPopup(
-                                            '<?php echo htmlspecialchars($class['class_title']); ?>',
-                                            '<?php echo htmlspecialchars($class['tutor_name']); ?>',
-                                            '<?php echo htmlspecialchars(date('d M Y', strtotime($class['class_date']))); ?>',
-                                            '<?php echo htmlspecialchars(date('H:i', strtotime($class['class_starttime']))) . '-' . htmlspecialchars(date('H:i', strtotime($class['class_endtime']))); ?>',
-                                            '<?php echo htmlspecialchars(number_format($class['class_fee'], 2)); ?>',
-                                            <?php echo htmlspecialchars($class['class_id']); ?>
-                                        )">Book Now</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr><td colspan="7">No available classes found.</td></tr>
-                        <?php endif; ?>
+                    <tbody id="available-classes-container"> <tr>
+                            <td class="class_title">Advanced CSS</td>
+                            <td class="tutor_name">Sarah Johnson</td>
+                            <td class="lesson-datetime">
+                                <span class="class_date">25 Aug 2023</span>
+                                <span class="class_time">10:00-11:30</span>
+                            </td>
+                            <td class="class_fee">RM45.00</td>
+                            <td class="class_capacity">8</td>
+                            <td>
+                                <button class="book-btn" onclick="openBookPopup('Advanced CSS', 'Sarah Johnson', '25 Aug 2023', '10:00-11:30', '45.00', 201)">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="class_title">React Basics</td>
+                            <td class="tutor_name">Jane Smith</td>
+                            <td class="lesson-datetime">
+                                <span class="class_date">05 Sep 2023</span>
+                                <span class="class_time">13:00-14:30</span>
+                            </td>
+                            <td class="class_fee">RM60.00</td>
+                            <td class="class_capacity">12</td>
+                            <td>
+                                <button class="book-btn" onclick="openBookPopup('React Basics', 'Jane Smith', '05 Sep 2023', '13:00-14:30', '60.00', 202)">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="class_title">Python for Beginners</td>
+                            <td class="tutor_name">John Doe</td>
+                            <td class="lesson-datetime">
+                                <span class="class_date">10 Sep 2023</span>
+                                <span class="class_time">09:30-11:00</span>
+                            </td>
+                            <td class="class_fee">RM50.00</td>
+                            <td class="class_capacity">15</td>
+                            <td>
+                                <button class="book-btn" onclick="openBookPopup('Python for Beginners', 'John Doe', '10 Sep 2023', '09:30-11:00', '50.00', 203)">Book Now</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
 
-    <!-- Book Now Popup -->
     <div class="popup-overlay" id="book-popup" style="display: none;">
         <div class="popup-content">
             <h3>Book Class</h3>
@@ -173,8 +174,7 @@
                 <p><strong>Date:</strong> <span id="book-class-date"></span></p>
                 <p><strong>Time:</strong> <span id="book-class-time"></span></p>
                 <p><strong>Fee:</strong> <span id="book-class-fee"></span></p>
-                <input type="hidden" id="book-class-id"> <!-- Hidden input for class_id -->
-            </div>
+                <input type="hidden" id="book-class-id"> </div>
             <div class="popup-actions">
                 <button class="primary-btn" onclick="confirmBookPopup()">Confirm</button>
                 <button class="secondary-btn" onclick="closeBookPopup()">Cancel</button>
@@ -182,7 +182,6 @@
         </div>
     </div>
 
-    <!-- Rating Popup -->
     <div class="popup-overlay" id="rating-popup" style="display: none;">
         <div class="popup-content">
             <h3>Rate This Class</h3>
@@ -198,19 +197,39 @@
             <input type="hidden" id="rating-class-id">
             <input type="hidden" id="rating-stud-id">
             <div class="popup-actions">
-                <button class="primary-btn" id="submit-rating-btn">Submit</button>
+                <button class="primary-btn" id="submit-class-rating-btn">Submit</button>
                 <button class="secondary-btn" id="close-rating-popup-btn">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- Notification Element -->
+    <div class="popup-overlay" id="tutor-rating-popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Rate This Tutor</h3>
+            <p><strong>Tutor:</strong> <span id="tutor-rating-tutor-name"></span></p>
+            <div class="star-rating" id="tutor-star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+            <input type="hidden" id="tutor-rating-tutor-id">
+            <input type="hidden" id="tutor-rating-stud-id">
+            <div class="popup-actions">
+                <button class="primary-btn" id="submit-tutor-rating-btn">Submit</button>
+                <button class="secondary-btn" id="close-tutor-rating-popup-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <div id="notification" class="notification" aria-live="polite"></div>
 
     <script>
         // Global variables for popups
         let currentBookingClassId = null;
-        let selectedRating = 0;
+        let selectedClassRating = 0; // Renamed for clarity
+        let selectedTutorRating = 0; // New variable for tutor rating
 
         // --- General Popup Functions ---
         function showNotification(message, autoHide = true) {
@@ -330,35 +349,35 @@
             }
         });
 
-        // --- Rating Popup Logic ---
+        // --- Rating Popup Logic (for Class) ---
         function openRatingPopup(classTitle, tutorName, classId, studId) {
             document.getElementById('rating-class-title').textContent = classTitle;
             document.getElementById('rating-tutor-name').textContent = tutorName;
             document.getElementById('rating-class-id').value = classId;
-            document.getElementById('rating-stud-id').value = studId;
+            document.getElementById('rating-stud-id').value = studId; // Assuming stud_id is always 1 for static HTML
             document.getElementById('rating-popup').style.display = 'flex';
-            resetStars();
+            resetClassStars(); // Reset stars specifically for class rating
         }
 
         function closeRatingPopup() {
             document.getElementById('rating-popup').style.display = 'none';
         }
 
-        function resetStars() {
-            selectedRating = 0;
+        function resetClassStars() {
+            selectedClassRating = 0;
             document.querySelectorAll('#star-rating .star').forEach(star => {
                 star.classList.remove('selected');
             });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll('#star-rating .star');
+            const classStars = document.querySelectorAll('#star-rating .star');
 
-            stars.forEach(star => {
+            classStars.forEach(star => {
                 star.addEventListener('click', function() {
-                    selectedRating = parseInt(this.getAttribute('data-value'));
-                    stars.forEach((s, i) => {
-                        if (i < selectedRating) {
+                    selectedClassRating = parseInt(this.getAttribute('data-value'));
+                    classStars.forEach((s, i) => {
+                        if (i < selectedClassRating) {
                             s.classList.add('selected');
                         } else {
                             s.classList.remove('selected');
@@ -369,9 +388,9 @@
 
             document.getElementById('close-rating-popup-btn').onclick = closeRatingPopup;
 
-            document.getElementById('submit-rating-btn').onclick = async function() {
-                if (selectedRating === 0) {
-                    showNotification('Please select a star rating.', true);
+            document.getElementById('submit-class-rating-btn').onclick = async function() {
+                if (selectedClassRating === 0) {
+                    showNotification('Please select a star rating for the class.', true);
                     return;
                 }
 
@@ -379,7 +398,7 @@
                 const studId = document.getElementById('rating-stud-id').value;
                 
                 closeRatingPopup();
-                showNotification('Submitting rating...', false);
+                showNotification('Submitting class rating...', false);
 
                 try {
                     const response = await fetch('student.php', {
@@ -387,7 +406,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: `action=submit_rating&class_id=${classId}&stud_id=${studId}&rating=${selectedRating}`
+                        body: `action=submit_class_rating&class_id=${classId}&stud_id=${studId}&rating=${selectedClassRating}`
                     });
                     const result = await response.json();
 
@@ -400,13 +419,13 @@
                         showNotification(result.message, true);
                     }
                 } catch (error) {
-                    console.error('Error submitting rating:', error);
-                    showNotification('An error occurred while submitting rating.', true);
+                    console.error('Error submitting class rating:', error);
+                    showNotification('An error occurred while submitting class rating.', true);
                 }
             };
         });
 
-        // Optional: close rating popup when clicking outside content
+        // Optional: close class rating popup when clicking outside content
         document.addEventListener('DOMContentLoaded', function() {
             const ratingPopup = document.getElementById('rating-popup');
             if (ratingPopup) {
@@ -418,13 +437,101 @@
             }
         });
 
+        // --- Rating Popup Logic (for Tutor) ---
+        function openTutorRatingPopup(tutorName, tutorId) {
+            document.getElementById('tutor-rating-tutor-name').textContent = tutorName;
+            document.getElementById('tutor-rating-tutor-id').value = tutorId;
+            document.getElementById('tutor-rating-stud-id').value = 1; // Assuming stud_id is always 1
+            document.getElementById('tutor-rating-popup').style.display = 'flex';
+            resetTutorStars(); // Reset stars specifically for tutor rating
+        }
+
+        function closeTutorRatingPopup() {
+            document.getElementById('tutor-rating-popup').style.display = 'none';
+        }
+
+        function resetTutorStars() {
+            selectedTutorRating = 0;
+            document.querySelectorAll('#tutor-star-rating .star').forEach(star => {
+                star.classList.remove('selected');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const tutorStars = document.querySelectorAll('#tutor-star-rating .star');
+
+            tutorStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedTutorRating = parseInt(this.getAttribute('data-value'));
+                    tutorStars.forEach((s, i) => {
+                        if (i < selectedTutorRating) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+
+            document.getElementById('close-tutor-rating-popup-btn').onclick = closeTutorRatingPopup;
+
+            document.getElementById('submit-tutor-rating-btn').onclick = async function() {
+                if (selectedTutorRating === 0) {
+                    showNotification('Please select a star rating for the tutor.', true);
+                    return;
+                }
+
+                const tutorId = document.getElementById('tutor-rating-tutor-id').value;
+                const studId = document.getElementById('tutor-rating-stud-id').value;
+                
+                closeTutorRatingPopup();
+                showNotification('Submitting tutor rating...', false);
+
+                try {
+                    const response = await fetch('student.php', { // Assuming student.php handles tutor ratings
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=submit_tutor_rating&tutor_id=${tutorId}&stud_id=${studId}&rating=${selectedTutorRating}`
+                    });
+                    const result = await response.json();
+
+                    if (result.status === 'success') {
+                        showNotification(result.message, true);
+                        setTimeout(() => {
+                            window.location.reload(); // Reload to show updated ratings
+                        }, 1000);
+                    } else {
+                        showNotification(result.message, true);
+                    }
+                } catch (error) {
+                    console.error('Error submitting tutor rating:', error);
+                    showNotification('An error occurred while submitting tutor rating.', true);
+                }
+            };
+        });
+
+        // Optional: close tutor rating popup when clicking outside content
+        document.addEventListener('DOMContentLoaded', function() {
+            const tutorRatingPopup = document.getElementById('tutor-rating-popup');
+            if (tutorRatingPopup) {
+                tutorRatingPopup.addEventListener('click', function(e) {
+                    if (e.target === tutorRatingPopup) {
+                        closeTutorRatingPopup();
+                    }
+                });
+            }
+        });
+
+
         // --- Search Bar Functionality (Basic Example) ---
         document.getElementById('class-search').addEventListener('keyup', function() {
             const searchValue = this.value.toLowerCase();
             const rows = document.querySelectorAll('#available-classes-container tr');
             rows.forEach(row => {
-                const classTitle = row.querySelector('.lesson-title').textContent.toLowerCase();
-                const tutorName = row.querySelector('.lesson-tutor').textContent.toLowerCase();
+                const classTitle = row.querySelector('.class_title').textContent.toLowerCase();
+                const tutorName = row.querySelector('.tutor_name').textContent.toLowerCase();
                 if (classTitle.includes(searchValue) || tutorName.includes(searchValue)) {
                     row.style.display = '';
                 } else {
