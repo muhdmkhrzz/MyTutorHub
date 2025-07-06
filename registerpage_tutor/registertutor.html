@@ -49,29 +49,38 @@
       <div class="form-wrapper">
         <h2>Create your account</h2>
         
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" placeholder="Choose a username" />
-        </div>
+        <!-- !!! CORRECTED: Added the <form> tag with action and method !!! -->
+        <form action="register_tutor.php" method="POST">
+          <div class="form-group">
+            <label for="tutor_id">Tutor ID</label>
+            <input type="text" id="tutor_id" name="tutor_id" placeholder="Enter your Tutor ID (e.g., T101)" required />
+          </div>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="Your email address" />
-        </div>
+          <div class="form-group">
+            <label for="tutor_name">Tutor Name</label>
+            <input type="text" id="tutor_name" name="tutor_name" placeholder="Enter your full name" required />
+          </div>
 
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" placeholder="Create a password" />
-        </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required />
+          </div>
 
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" placeholder="Confirm your password" />
-        </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a password" required />
+          </div>
 
-        <div>
-          <button class="submit-button">Register</button>
-        </div>
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required />
+          </div>
+
+          <div>
+            <button type="submit" class="submit-button">Register</button>
+          </div>
+        </form>
+        <!-- End of corrected form -->
 
         <p class="login-text">
           Already have an account? <a href="../loginpage_tutor/logintutor.html">Log in</a>
