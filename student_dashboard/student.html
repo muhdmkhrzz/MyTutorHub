@@ -54,7 +54,7 @@
                 <p><strong>Date:</strong> <span class="class_date">01 Jan 2023</span></p>
             </div>
             <div class="popup-actions">
-                <button id="confirm-buy-btn" class="primary-btn">Confirm</button>
+                <a href="https://toyyibpay.com/MyTutorHub-Registration" id="confirm-buy-btn" class="primary-btn">Confirm</a>
                 <button id="close-buy-popup-btn" class="secondary-btn">Cancel</button>
             </div>
             </div>
@@ -176,7 +176,7 @@
                 <p><strong>Fee:</strong> <span id="book-class-fee"></span></p>
                 <input type="hidden" id="book-class-id"> </div>
             <div class="popup-actions">
-                <button class="primary-btn" onclick="confirmBookPopup()">Confirm</button>
+                <a href="https://toyyibpay.com/MyTutorHub-Registration" class="primary-btn" onclick="confirmBookPopup().then(() => { window.location.href = this.href; }); return false;">Confirm</a>
                 <button class="secondary-btn" onclick="closeBookPopup()">Cancel</button>
             </div>
         </div>
@@ -273,12 +273,6 @@
             });
         }
 
-        if (confirmBuyBtn) {
-            confirmBuyBtn.addEventListener('click', () => {
-                buyLessonPopup.style.display = 'none';
-                showNotification('Lesson purchased successfully!', true);
-            });
-        }
 
         // Optional: close buy lesson popup when clicking outside content
         if (buyLessonPopup) {
