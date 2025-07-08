@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fileName: resourceFile.name
             };
             resourcesList.push(newResource);
-            showNotification('Resource added successfully (frontend only)!', 'success');
+            showNotification('Resource added successfully!', 'success'); // Changed message to "Resource added successfully!"
 
             hideModal(addResourceModal);
             addResourceForm.reset();
@@ -690,7 +690,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Highlight active section while scrolling (existing logic) ---
     // Updated to exclude 'student-overview-section'
     const sections = document.querySelectorAll('.content-section');
-    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    // Select all navigation links, including the one in sidebar-footer
+    const navLinks = document.querySelectorAll('.sidebar-nav a, .sidebar-footer a');
+
 
     window.addEventListener('scroll', function() {
         let current = '';
