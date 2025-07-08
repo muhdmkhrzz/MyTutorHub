@@ -1,8 +1,4 @@
 <?php
-// fetch_all_bookings.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Fetches all booked classes for a given student.
  *

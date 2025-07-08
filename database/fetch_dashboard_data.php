@@ -1,8 +1,4 @@
 <?php
-// fetch_dashboard_data.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Fetches all necessary data for the student dashboard.
  * This includes student details, booked classes, and available classes.
@@ -33,7 +29,6 @@ function fetchDashboardData($conn, $stud_id) {
     }
 
     // --- Fetch Booked Classes for the Student ---
-    // Join booking, class, and tutor tables to get comprehensive details
     $sql_booked_classes = "
         SELECT
             b.booking_id,
@@ -75,8 +70,6 @@ function fetchDashboardData($conn, $stud_id) {
     }
 
     // --- Fetch Available Classes (not yet booked by the student) ---
-    // Select classes that are not in the booking table for the current student
-    // Also include tutor details and average tutor rating
     $sql_available_classes = "
         SELECT
             cl.class_id,

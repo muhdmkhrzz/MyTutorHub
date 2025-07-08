@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging (REMOVE IN PRODUCTION)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -7,7 +6,7 @@ error_reporting(E_ALL);
 session_start();
 header('Content-Type: application/json');
 
-require_once 'connect.php'; // Path to your database connection file
+require_once 'connect.php'; 
 
 $response = ['success' => false, 'message' => ''];
 
@@ -19,7 +18,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $tutor_id = $_SESSION['user_id']; // Get the logged-in tutor's ID
+    $tutor_id = $_SESSION['user_id']; 
 
     // Sanitize and retrieve form data
     $class_id = (int)$_POST['class_id'];
@@ -30,12 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $class_starttime = $conn->real_escape_string($_POST['class_starttime']);
     $class_endtime = $conn->real_escape_string($_POST['class_endtime']);
     $class_capacity = (int)$_POST['class_capacity'];
-    $class_deadline = !empty($_POST['class_deadline']) ? $conn->real_escape_string($_POST['class_deadline']) : NULL; // Handle optional deadline
+    $class_deadline = !empty($_POST['class_deadline']) ? $conn->real_escape_string($_POST['class_deadline']) : NULL; 
     $class_fee = (double)$_POST['class_fee'];
-    $class_file = !empty($_POST['class_file']) ? $conn->real_escape_string($_POST['class_file']) : NULL; // Handle optional class_file
+    $class_file = !empty($_POST['class_file']) ? $conn->real_escape_string($_POST['class_file']) : NULL; 
 
     try {
-        // Update the class details
         $sql_update_class = "UPDATE Class SET 
                                 class_title = ?, 
                                 class_description = ?, 
@@ -54,10 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Prepare failed (update class): " . $conn->error);
         }
 
-        // sssssisdii - 10 strings/integers/doubles for 10 parameters
-        // class_title, class_description, class_date, class_starttime, class_endtime,
-        // class_capacity, class_deadline, class_fee, course_id, class_file,
-        // class_id, tutor_id
         $stmt_update_class->bind_param("sssssisdiiii", 
             $class_title, 
             $class_description, 

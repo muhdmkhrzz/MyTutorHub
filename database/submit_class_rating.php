@@ -1,8 +1,4 @@
 <?php
-// submit_class_rating.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Handles the submission of a class rating by a student.
  * Inserts a new review or updates an existing one for a specific class.
@@ -51,9 +47,7 @@ function submitClassRating($conn, $stud_id, $class_id, $rating) {
             return ['status' => 'error', 'message' => 'Failed to update class rating.'];
         }
     } else {
-        // Insert new review
-        // First, check if the student has actually booked this class.
-        // This prevents a student from rating a class they haven't attended/booked.
+
         $stmt_check_booking = $conn->prepare("SELECT COUNT(*) FROM booking WHERE stud_id = ? AND class_id = ?");
         if (!$stmt_check_booking) {
             error_log("Prepare statement failed for booking check: " . $conn->error);

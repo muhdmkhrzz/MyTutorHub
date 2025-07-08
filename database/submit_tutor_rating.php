@@ -1,8 +1,4 @@
 <?php
-// submit_tutor_rating.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Handles the submission of a tutor rating by a student.
  * Inserts a new review or updates an existing one for a specific tutor.
@@ -21,14 +17,6 @@ function submitTutorRating($conn, $stud_id, $tutor_id, $rating) {
 
     // Get current timestamp for review_date
     $review_date = date('Y-m-d H:i:s');
-
-    // Check if a review for this tutor by this student already exists
-    // Note: A student can rate a tutor multiple times if they book different classes with the same tutor.
-    // However, for simplicity, we'll check if a review for this specific tutor by this student exists.
-    // If you want to allow multiple reviews per tutor per class, you'd need to adjust the logic
-    // to also include class_id in the WHERE clause, but your schema doesn't have a unique constraint
-    // on stud_id, tutor_id, class_id for the review table.
-    // For now, we'll assume one overall rating per tutor per student.
     $stmt = $conn->prepare("SELECT review_id FROM review WHERE stud_id = ? AND tutor_id = ?");
     if (!$stmt) {
         error_log("Prepare statement failed for tutor review check: " . $conn->error);
@@ -57,8 +45,6 @@ function submitTutorRating($conn, $stud_id, $tutor_id, $rating) {
             return ['status' => 'error', 'message' => 'Failed to update tutor rating.'];
         }
     } else {
-        // Insert new review
-        // Before inserting, verify that the student has booked at least one class with this tutor.
         $stmt_check_booking_with_tutor = $conn->prepare("SELECT COUNT(*) FROM booking b JOIN class c ON b.class_id = c.class_id WHERE b.stud_id = ? AND c.tutor_id = ?");
         if (!$stmt_check_booking_with_tutor) {
             error_log("Prepare statement failed for tutor booking check: " . $conn->error);
@@ -75,8 +61,6 @@ function submitTutorRating($conn, $stud_id, $tutor_id, $rating) {
             return ['status' => 'error', 'message' => 'You can only rate tutors you have had classes with.'];
         }
 
-        // For a new tutor rating, we need a class_id to insert into the review table.
-        // We'll use the class_id of the most recent class the student booked with this tutor.
         $stmt_get_class_id = $conn->prepare("SELECT c.class_id FROM booking b JOIN class c ON b.class_id = c.class_id WHERE b.stud_id = ? AND c.tutor_id = ? ORDER BY b.booking_date DESC LIMIT 1");
         if (!$stmt_get_class_id) {
             error_log("Prepare statement failed for getting class_id for tutor review: " . $conn->error);

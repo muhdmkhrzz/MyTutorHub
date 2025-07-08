@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging (REMOVE IN PRODUCTION)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -7,7 +6,7 @@ error_reporting(E_ALL);
 session_start();
 header('Content-Type: application/json');
 
-require_once '../database/connect.php'; // Path to your database connection file
+require_once '../database/connect.php'; 
 
 $response = ['success' => false, 'message' => '', 'class_details' => null];
 
@@ -25,7 +24,7 @@ if (!isset($_GET['class_id']) || !is_numeric($_GET['class_id'])) {
 }
 
 $class_id = (int)$_GET['class_id'];
-$tutor_id = $_SESSION['user_id']; // Ensure the tutor can only view their own classes
+$tutor_id = $_SESSION['user_id']; 
 
 try {
     // Ensure class_deadline is explicitly selected

@@ -1,11 +1,9 @@
 <?php
-// student.php - Main handler for student dashboard actions
-
 // Start the session to access session variables (e.g., student ID)
 session_start();
 
 // Include the database connection file
-require_once 'connect.php'; // Adjust path if your connect.php is in a different directory
+require_once 'connect.php'; 
 
 // Set content type to JSON for all responses
 header('Content-Type: application/json');
@@ -16,7 +14,7 @@ if (!isset($_SESSION['stud_id'])) {
     exit();
 }
 
-$stud_id = $_SESSION['stud_id']; // Get the logged-in student's ID
+$stud_id = $_SESSION['stud_id']; 
 
 // Check if an action is requested via POST
 if (isset($_POST['action'])) {
@@ -24,15 +22,12 @@ if (isset($_POST['action'])) {
 
     switch ($action) {
         case 'fetch_dashboard_data':
-            // Include file to fetch all dashboard data
             require_once 'fetch_dashboard_data.php';
-            // Call a function from fetch_dashboard_data.php to get data
             $dashboardData = fetchDashboardData($conn, $stud_id);
             echo json_encode(['status' => 'success', 'data' => $dashboardData]);
             break;
 
         case 'book_class':
-            // Include file to handle class booking
             require_once 'book_class.php';
 
             $class_id = isset($_POST['class_id']) ? (int)$_POST['class_id'] : 0;
@@ -41,9 +36,7 @@ if (isset($_POST['action'])) {
             break;
 
         case 'submit_class_rating':
-            // Include file to handle class rating submission
             require_once 'submit_class_rating.php';
-            // Call a function from submit_class_rating.php
             $class_id = isset($_POST['class_id']) ? (int)$_POST['class_id'] : 0;
             $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
             $result = submitClassRating($conn, $stud_id, $class_id, $rating);
@@ -51,22 +44,20 @@ if (isset($_POST['action'])) {
             break;
 
         case 'submit_tutor_rating':
-            // Include file to handle tutor rating submission
             require_once 'submit_tutor_rating.php';
-            // Call a function from submit_tutor_rating.php
             $tutor_id = isset($_POST['tutor_id']) ? $_POST['tutor_id'] : '';
             $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
             $result = submitTutorRating($conn, $stud_id, $tutor_id, $rating);
             echo json_encode($result);
             break;
 
-        case 'fetch_all_bookings': // New action for all bookings
+        case 'fetch_all_bookings': 
             require_once 'fetch_all_bookings.php';
             $allBookings = fetchAllBookings($conn, $stud_id);
             echo json_encode(['status' => 'success', 'data' => $allBookings]);
             break;
 
-        case 'fetch_all_available_classes': // New action for all available classes
+        case 'fetch_all_available_classes': 
             require_once 'fetch_all_available_classes.php';
             $allAvailableClasses = fetchAllAvailableClasses($conn, $stud_id);
             echo json_encode(['status' => 'success', 'data' => $allAvailableClasses]);
@@ -80,6 +71,5 @@ if (isset($_POST['action'])) {
     echo json_encode(['status' => 'error', 'message' => 'No action specified.']);
 }
 
-// Close the database connection
 $conn->close();
 ?>

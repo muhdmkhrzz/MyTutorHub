@@ -1,8 +1,4 @@
 <?php
-// book_class.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Handles the booking of a class by a student.
  * Inserts a new record into the 'booking' table and decrements the class capacity.
@@ -13,17 +9,17 @@
  * @return array An associative array with 'status' and 'message'.
  */
 function bookClass($conn, $stud_id, $class_id) {
-    // Validate inputs
+    
     if (empty($stud_id) || $class_id <= 0) {
         return ['status' => 'error', 'message' => 'Invalid student ID or class ID provided.'];
     }
 
-    // Start a transaction for atomicity
+    
     $conn->begin_transaction();
 
     try {
         // 1. Check if the class exists and has available capacity
-        $stmt = $conn->prepare("SELECT class_capacity, class_fee FROM class WHERE class_id = ? FOR UPDATE"); // FOR UPDATE locks the row
+        $stmt = $conn->prepare("SELECT class_capacity, class_fee FROM class WHERE class_id = ? FOR UPDATE");
         if (!$stmt) {
             throw new Exception("Prepare statement failed: " . $conn->error);
         }
@@ -64,7 +60,7 @@ function bookClass($conn, $stud_id, $class_id) {
         }
 
         // 3. Insert into booking table
-        $booking_date = date('Y-m-d'); // Current date
+        $booking_date = date('Y-m-d'); 
         $stmt = $conn->prepare("INSERT INTO booking (booking_date, total_payment, stud_id, class_id) VALUES (?, ?, ?, ?)");
         if (!$stmt) {
             throw new Exception("Prepare statement failed: " . $conn->error);

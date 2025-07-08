@@ -1,8 +1,4 @@
 <?php
-// fetch_all_available_classes.php
-
-// This file is included by student.php, so $conn and $stud_id are already available.
-
 /**
  * Fetches all available classes that the given student has not yet booked.
  *
@@ -13,9 +9,6 @@
 function fetchAllAvailableClasses($conn, $stud_id) {
     $availableClasses = [];
 
-    // Select classes that are not in the booking table for the current student
-    // and are in the future or today.
-    // Also include tutor details and average tutor rating.
     $sql_all_available_classes = "
         SELECT
             cl.class_id,

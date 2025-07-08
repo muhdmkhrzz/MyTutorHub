@@ -1,5 +1,5 @@
 <?php
-// Enable error reporting for debugging (REMOVE IN PRODUCTION)
+// Enable error reporting for debugging 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -7,12 +7,11 @@ error_reporting(E_ALL);
 session_start();
 header('Content-Type: application/json');
 
-// Path to your database connection file (assuming it's in the same 'database' folder)
+// Path to database connection file 
 require_once 'connect.php';
 
 $response = ['success' => false, 'message' => '', 'courses' => []];
 
-// Check if the user is logged in (optional, but good practice if only authenticated users can see courses)
 // For tutor dashboard, we assume the user is already logged in as a tutor.
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $response['message'] = 'Unauthorized access.';
