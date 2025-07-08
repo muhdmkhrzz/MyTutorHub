@@ -131,6 +131,40 @@ body {
     color: var(--primary-color);
 }
 
+/* Sidebar Footer for Logout Button */
+.sidebar-footer {
+    width: 100%;
+    margin-top: auto; /* Pushes the footer to the bottom */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Optional: a subtle separator */
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: var(--dark-color);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly different background for logout */
+}
+
+.sidebar-footer a i {
+    margin-right: 15px;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    transition: color 0.3s ease;
+}
+
+.sidebar-footer a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+
 /* Main Content Area */
 .main-content {
     flex-grow: 1;
@@ -553,6 +587,19 @@ body {
         display: block; /* Show text again */
     }
     
+    /* Adjust sidebar-footer for mobile */
+    .sidebar-footer {
+        margin-top: 10px; /* Adjust margin */
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-footer a {
+        flex-direction: column; /* Stack icon and text for logout button */
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
     .main-content {
         margin-left: 0; /* No left margin */
         width: 100%;

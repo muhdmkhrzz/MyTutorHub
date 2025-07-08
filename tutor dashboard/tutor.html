@@ -26,12 +26,14 @@
                 <ul>
                     <li><a href="#dashboard-section" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
                     <li><a href="#my-classes-section"><i class="fas fa-book-open"></i> <span>My Classes</span></a></li>
-                    <!-- Removed Student Overview Link -->
                     <li><a href="#resources-section"><i class="fas fa-folder"></i> <span>Resources</span></a></li>
                     <li><a href="#reports-section"><i class="fas fa-chart-bar"></i> <span>Reports</span></a></li>
-                    <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
+            <!-- Logout button moved to the bottom of the sidebar -->
+            <div class="sidebar-footer">
+                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+            </div>
         </aside>
 
         <!-- Main Content Area -->
@@ -85,11 +87,6 @@
                         <p class="report-value"><span id="total-student-bookings">0</span> Bookings</p>
                         <i class="fas fa-users report-icon"></i>
                     </div>
-                </div>
-                <!-- You can add more detailed charts or tables here later if needed -->
-                <!-- Example placeholder for future charts -->
-                <div class="placeholder-chart" style="margin-top: 30px; height: 200px;">
-                    <p>Detailed charts and analytics will appear here.</p>
                 </div>
             </section>
         </main>
