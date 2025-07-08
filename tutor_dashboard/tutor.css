@@ -1,14 +1,14 @@
 /* Updated CSS for Tutor Dashboard to match Student Dashboard style */
 /* Define CSS variables for consistent theming */
 :root {
-    --primary-color: #7c4fe0; /* Purple from student dashboard */
-    --secondary-color: #5e35b1; /* Darker purple */
-    --accent-color: #a18df0; /* Light purple from buttons */
-    --light-color: #f6f2ff; /* From right-panel */
+    --primary-color: #7c4fe0;
+    --secondary-color: #5e35b1;
+    --accent-color: #a18df0;
+    --light-color: #f6f2ff;
     --dark-color: #333;
-    --sidebar-bg: linear-gradient(180deg, #c9c1f2, #a09be9); /* Matching sidebar gradient */
-    --card-bg: #e6e1ff; /* Matching class-card bg */
-    --welcome-bg: linear-gradient(90deg, #f8d6ff, #d9d2fc); /* Welcome panel gradient */
+    --sidebar-bg: linear-gradient(180deg, #c9c1f2, #a09be9);
+    --card-bg: #e6e1ff;
+    --welcome-bg: linear-gradient(90deg, #f8d6ff, #d9d2fc);
 }
 
 /* Base Styles */
@@ -16,7 +16,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Use Poppins font for a modern look */
     font-family: 'Poppins', sans-serif;
 }
 
@@ -29,7 +28,7 @@ body {
 /* Dashboard Layout using Flexbox */
 .dashboard-container {
     display: flex;
-    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+    min-height: 100vh;
     background-color: #f5f5fa;
 }
 

@@ -2,37 +2,27 @@
 
 // Global variables for popups
 let currentBookingClassId = null;
-let selectedClassRating = 0; // Renamed for clarity
-let selectedTutorRating = 0; // New variable for tutor rating
+let selectedClassRating = 0;
+let selectedTutorRating = 0;
 
 // Helper function to get the correct URL for PHP scripts
 function getPhpScriptUrl(scriptName) {
-    // This function dynamically constructs the absolute path to the PHP script.
-    // It assumes the HTML file is in 'student_dashboard' and PHP files are in 'database'
-    // which are siblings under a common parent (e.g., MYTUTORHUB).
     const pathParts = window.location.pathname.split('/');
-    // Find the index of 'student_dashboard'
     const studentDashboardIndex = pathParts.indexOf('student_dashboard');
     let basePath = '';
 
     if (studentDashboardIndex > -1) {
-        // If 'student_dashboard' is found, go up to its parent and then into 'database'
         basePath = pathParts.slice(0, studentDashboardIndex).join('/');
     } else {
-        // Fallback: If 'student_dashboard' is not in the path (e.g., directly in root or different structure),
-        // assume 'database' is a sibling of the current directory.
-        // This might need adjustment based on the exact deployment environment.
-        basePath = pathParts.slice(0, -1).join('/'); // Go up one level from current HTML file
+        basePath = pathParts.slice(0, -1).join('/');
     }
 
-    // Ensure basePath starts with a slash and does not end with one
     if (basePath && !basePath.startsWith('/')) {
         basePath = '/' + basePath;
     }
     if (basePath.endsWith('/')) {
         basePath = basePath.slice(0, -1);
     }
-    // Construct the full URL
     return window.location.origin + basePath + '/database/' + scriptName;
 }
 
@@ -639,8 +629,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // --- Search Bar Functionality (Basic Example) ---
-// Moved the event listener attachment to after fetchDashboardContent to ensure elements are present
-// The keyup event is dispatched manually after content is loaded.
 document.addEventListener('DOMContentLoaded', function() {
     const classSearchInput = document.getElementById('class-search');
     if (classSearchInput) {

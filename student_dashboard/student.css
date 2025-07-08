@@ -1,17 +1,16 @@
-/* Updated CSS for Student Dashboard to match Tutor Dashboard style */
 /* Base Styles & Variables */
 :root {
-    --primary-color: #7c4fe0; /* Purple from tutor dashboard */
-    --primary-hover: #6b3fd9; /* Darker purple for hover */
-    --secondary-color: #5e35b1; /* Darker purple from tutor dashboard */
-    --accent-color: #a18df0; /* Light purple from tutor dashboard */
-    --light-color: #f6f2ff; /* From right-panel (tutor dashboard) */
-    --dark-color: #333; /* Consistent dark text */
-    --sidebar-bg: linear-gradient(180deg, #c9c1f2, #a09be9); /* Matching sidebar gradient */
-    --card-bg: #e6e1ff; /* Matching class-card bg */
-    --welcome-bg: linear-gradient(90deg, #f8d6ff, #d9d2fc); /* Welcome panel gradient */
+    --primary-color: #7c4fe0;
+    --primary-hover: #6b3fd9;
+    --secondary-color: #5e35b1;
+    --accent-color: #a18df0;
+    --light-color: #f6f2ff;
+    --dark-color: #333;
+    --sidebar-bg: linear-gradient(180deg, #c9c1f2, #a09be9);
+    --card-bg: #e6e1ff;
+    --welcome-bg: linear-gradient(90deg, #f8d6ff, #d9d2fc);
 
-    --text-color: #333; /* Redundant with dark-color, but kept for clarity */
+    --text-color: #333;
     --text-light: #555;
     --white: #ffffff;
     --border-radius: 12px;
@@ -23,11 +22,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif; /* Consistent font with tutor dashboard */
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #f5f5fa; /* Lighter background, consistent with tutor dashboard body */
+    background-color: #f5f5fa;
     color: var(--dark-color);
     line-height: 1.6;
 }
@@ -35,8 +34,8 @@ body {
 /* Dashboard Layout using Flexbox */
 .dashboard-container {
     display: flex;
-    min-height: 100vh; /* Ensure it takes at least the full viewport height */
-    background-color: #f5f5fa; /* Consistent with tutor dashboard */
+    min-height: 100vh;
+    background-color: #f5f5fa;
 }
 
 /* Sidebar Styling */
@@ -49,19 +48,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: sticky; /* Makes sidebar sticky */
+    position: sticky;
     top: 0;
-    height: 100vh; /* Full height */
-    overflow-y: auto; /* Enable scrolling for long content */
-    z-index: 1000; /* Ensure sidebar is above main content */
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
 }
 
-.sidebar .logo { /* Assuming you have a logo image */
+.sidebar .logo {
     width: 150px;
     margin-bottom: 20px;
 }
 
-.sidebar-header { /* Added for consistent branding with tutor dashboard */
+.sidebar-header {
     margin-bottom: 20px;
     text-align: center;
 }
@@ -72,9 +71,6 @@ body {
     color: var(--dark-color);
 }
 
-/* Removed .sidebar .welcome-message as it's no longer in the HTML */
-
-
 .sidebar a {
     display: flex;
     align-items: center;
@@ -84,50 +80,48 @@ body {
     text-decoration: none;
     border-radius: var(--border-radius);
     margin-bottom: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
-    font-weight: 500; /* Consistent font weight */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    font-weight: 500;
 }
 
 .sidebar a i {
-    margin-right: 15px; /* Increased margin for icons */
+    margin-right: 15px;
     font-size: 1.1rem;
-    color: var(--secondary-color); /* Icon color */
+    color: var(--secondary-color);
     transition: color 0.3s ease;
 }
 
 .sidebar a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+    background-color: rgba(255, 255, 255, 0.2);
     color: var(--primary-color);
-    transform: translateX(5px); /* Slide effect on hover */
+    transform: translateX(5px);
 }
 
 .sidebar a.active {
-    background-color: var(--light-color); /* Active link background */
+    background-color: var(--light-color);
     color: var(--primary-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Active link shadow */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     font-weight: 600;
 }
 
 .sidebar a.active i {
-    color: var(--primary-color); /* Active icon color */
-}
-
-/* Adjusted logout link styling to match other links */
-.sidebar a[href="../logout.php"] {
-    margin-top: auto; /* Pushes logout to the bottom */
-    background-color: transparent; /* No specific background */
-    color: var(--dark-color); /* Default text color */
-}
-
-.sidebar a[href="../logout.php"]:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
     color: var(--primary-color);
 }
 
+.sidebar a[href="../logout.php"] {
+    margin-top: auto;
+    background-color: transparent;
+    color: var(--dark-color);
+}
+
+.sidebar a[href="../logout.php"]:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--primary-color);
+}
 
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
-    display: none; /* Hidden by default on larger screens */
+    display: none;
     position: fixed;
     top: 15px;
     left: 15px;
@@ -138,17 +132,16 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.2rem;
-    z-index: 1001; /* Above sidebar when it's transformed */
+    z-index: 1001;
 }
-
 
 /* Main Content Area */
 .main-content {
     flex-grow: 1;
     padding: 30px;
-    background-color: #f5f5fa; /* Consistent with tutor dashboard */
-    overflow-y: auto; /* Enable scrolling for main content */
-    transition: margin-left 0.3s ease; /* Transition for sidebar toggle */
+    background-color: #f5f5fa;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
 }
 
 /* Content Sections */
@@ -168,18 +161,9 @@ body {
     padding-bottom: 10px;
 }
 
-/* Removed Search Bar styles */
-/* .search-bar { ... } */
-/* .search-bar .search-container { ... } */
-/* .search-bar .search-container i { ... } */
-/* .search-bar .search-container input { ... } */
-/* .current-date-display { ... } */
-
-
 /* Welcome Panel */
 .welcome-panel {
     display: flex;
-    /* Adjusted to center text when image and button are removed */
     justify-content: center;
     align-items: center;
     background: var(--welcome-bg);
@@ -187,7 +171,7 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     margin-bottom: 30px;
-    text-align: center; /* Center text within the panel */
+    text-align: center;
 }
 
 .welcome-panel h2 {
@@ -200,9 +184,6 @@ body {
     line-height: 1.5;
 }
 
-/* Removed .welcome-panel .welcome-image as it's no longer in the HTML */
-
-
 /* Classes Grid (for Booked Classes) */
 .classes-grid {
     display: grid;
@@ -213,12 +194,12 @@ body {
 .class-card {
     background-color: var(--card-bg);
     padding: 20px;
-    border-radius: 10px; /* Consistent border radius */
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effects */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .class-card:hover {
@@ -227,22 +208,22 @@ body {
 }
 
 .class-card h3 {
-    color: var(--primary-color); /* Consistent heading color */
+    color: var(--primary-color);
     font-size: 1.3rem;
     margin-bottom: 15px;
 }
 
 .class-card .class_description p {
     font-size: 0.95rem;
-    margin-bottom: 8px; /* Consistent spacing */
-    display: flex; /* For icon alignment */
+    margin-bottom: 8px;
+    display: flex;
     align-items: center;
     color: #555;
 }
 
 .class-card .class_description i {
     margin-right: 10px;
-    color: var(--accent-color); /* Icon color */
+    color: var(--accent-color);
 }
 
 .class-card .class-rating-display,
@@ -254,12 +235,12 @@ body {
 
 .class-card .class-rating-display i,
 .class-card .tutor-rating-display i {
-    color: #ffc107; /* Gold star color */
+    color: #ffc107;
     margin-left: 5px;
-    margin-right: 0; /* Override default icon margin */
+    margin-right: 0;
 }
 
-.class-card .review-btn { /* For side-by-side buttons */
+.class-card .review-btn {
     margin-top: 15px;
     margin-right: 10px;
     margin-bottom: 5px;
@@ -280,17 +261,17 @@ body {
 
 /* Dashboard Table (for Available Classes) */
 .table-container {
-    overflow-x: auto; /* Ensures table is scrollable on small screens */
-    margin-top: 20px; /* Space below section header */
+    overflow-x: auto;
+    margin-top: 20px;
 }
 
 .dashboard-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    border-radius: 10px; /* Rounded corners for table */
-    overflow: hidden; /* Ensures rounded corners apply to content */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Table shadow */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-table th,
@@ -309,17 +290,17 @@ body {
 }
 
 .dashboard-table tbody tr:nth-child(even) {
-    background-color: var(--card-bg); /* Light background for even rows */
+    background-color: var(--card-bg);
 }
 
 .dashboard-table tbody tr:hover {
-    background-color: #f0ebff; /* Lighter hover effect */
+    background-color: #f0ebff;
 }
 
 .dashboard-table .btn {
     padding: 8px 12px;
     font-size: 0.85rem;
-    white-space: nowrap; /* Prevent button text from wrapping */
+    white-space: nowrap;
 }
 
 /* Form Styles (for rating popup) */
@@ -357,7 +338,6 @@ body {
     outline: none;
 }
 
-
 /* Buttons */
 .btn {
     padding: 10px 20px;
@@ -367,10 +347,10 @@ body {
     font-size: 1rem;
     font-weight: 500;
     transition: var(--transition);
-    text-decoration: none; /* For anchor tags acting as buttons */
-    display: inline-block; /* For anchor tags */
+    text-decoration: none;
+    display: inline-block;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Consistent button shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .primary-btn {
@@ -380,11 +360,11 @@ body {
 
 .primary-btn:hover {
     background-color: var(--primary-hover);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .secondary-btn {
-    background-color: #6c757d; /* A neutral grey */
+    background-color: #6c757d;
     color: var(--white);
 }
 
@@ -401,24 +381,23 @@ body {
 
 /* Popup Overlay (for all popups) */
 .popup-overlay {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Frosted glass effect */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
     z-index: 1000;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    opacity: 0; /* Start hidden for fade-in */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* This rule ensures the popup fades in when JavaScript sets its display to 'flex' */
 .popup-overlay[style*="display: flex"] {
-    opacity: 1; /* Fade in when displayed */
+    opacity: 1;
 }
 
 .popup-content {
@@ -430,28 +409,26 @@ body {
     max-width: 500px;
     width: 90%;
     text-align: center;
-    transform: scale(0.9); /* Start slightly smaller for pop effect */
+    transform: scale(0.9);
     transition: transform 0.3s ease-in-out;
 }
 
-/* Add a rule to scale up when the popup is displayed */
 .popup-overlay[style*="display: flex"] .popup-content {
     transform: scale(1);
 }
 
-
-.popup-content h3 { /* Changed from h2 to h3 to match student.html */
+.popup-content h3 {
     color: var(--primary-color);
     margin-bottom: 15px;
-    font-size: 1.5rem; /* Consistent heading size */
+    font-size: 1.5rem;
 }
 
 .popup-content p {
     margin-bottom: 10px;
-    color: var(--dark-color); /* Consistent text color */
+    color: var(--dark-color);
 }
 
-.popup-content .lesson-details p { /* Specific styles for details within booking popup */
+.popup-content .lesson-details p {
     font-size: 1rem;
     margin-bottom: 5px;
     color: #555;
@@ -461,7 +438,7 @@ body {
 /* Star Rating Styles */
 .star-rating {
     font-size: 1.8rem;
-    color: #ddd; /* Default star color */
+    color: #ddd;
     margin-bottom: 15px;
     display: flex;
     justify-content: center;
@@ -473,41 +450,40 @@ body {
 }
 
 .star-rating .star.selected {
-    color: #ffc107; /* Gold color for selected stars */
+    color: #ffc107;
 }
 
 /* Popup Actions (buttons within popups) */
 .popup-actions {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between buttons */
+    gap: 15px;
     margin-top: 20px;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-wrap: wrap;
 }
 
 .popup-actions .primary-btn,
 .popup-actions .secondary-btn {
-    flex-grow: 1; /* Allow buttons to grow and fill space */
-    max-width: 150px; /* Limit their max width */
+    flex-grow: 1;
+    max-width: 150px;
 }
-
 
 /* Notification Element Styling */
 .notification {
-    display: none; /* Hidden by default, shown by JS */
+    display: none;
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #4CAF50; /* Default green for success */
+    background-color: #4CAF50;
     color: white;
     padding: 15px 25px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 1001; /* Above modals */
+    z-index: 1001;
     font-size: 1rem;
     text-align: center;
-    opacity: 0; /* Start hidden for fade-in */
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -515,9 +491,8 @@ body {
 .notification.error { background-color: #f44336; }
 .notification.info { background-color: #2196F3; }
 
-/* This rule ensures the notification fades in when JavaScript sets its display to 'block' */
 .notification[style*="display: block"] {
-    opacity: 1; /* Fade in when displayed */
+    opacity: 1;
 }
 
 /* Responsive Adjustments */
@@ -539,9 +514,6 @@ body {
     .mobile-menu-toggle {
         display: block;
     }
-
-    /* Removed search-bar responsive styles */
-    /* .search-bar { ... } */
 }
 
 @media (max-width: 768px) {
@@ -551,22 +523,49 @@ body {
         gap: 1.5rem;
     }
 
-    /* Removed .welcome-panel img as it's no longer in the HTML */
-    
     .classes-grid {
         grid-template-columns: 1fr;
     }
 
     .dashboard-table th,
     .dashboard-table td {
-        padding: 8px 10px; /* Smaller padding for mobile tables */
+        padding: 8px 10px;
         font-size: 0.9rem;
     }
 
-    /* Removed search-bar responsive styles */
-    /* .search-bar { ... } */
-    /* .search-bar .search-container { ... } */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding-bottom: 0;
+    }
+    .sidebar-header {
+        display: none;
+    }
+    .sidebar a {
+        flex-direction: column;
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    .sidebar a span {
+        display: block;
+    }
+}
 
+@media (max-width: 576px) {
+    .popup-content {
+        min-width: 90%;
+        padding: 1.5rem;
+    }
+
+    .popup-actions {
+        flex-direction: column;
+    }
+
+    .primary-btn, .secondary-btn {
+        width: 100%;
+    }
     /* Mobile sidebar navigation */
     .sidebar {
         width: 100%;
