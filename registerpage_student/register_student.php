@@ -1,18 +1,17 @@
 <?php
-// Include the database connection file
-// CORRECTED PATH: Go up one directory, then into the 'database' folder
+
 require_once '../database/connect.php';
 
-// Check if the form was submitted using POST method
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and retrieve form data
-    $stud_id = $conn->real_escape_string($_POST['stud_id']); // Now directly getting stud_id
-    $stud_name = $conn->real_escape_string($_POST['stud_name']); // New field for student name
+    
+    $stud_id = $conn->real_escape_string($_POST['stud_id']); // 
+    $stud_name = $conn->real_escape_string($_POST['stud_name']); 
     $stud_email = $conn->real_escape_string($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Basic validation
+    
     if (empty($stud_id) || empty($stud_name) || empty($stud_email) || empty($password) || empty($confirm_password)) {
         echo "<script>alert('Please fill in all required fields.'); window.location.href='registerstudent.html';</script>";
         exit();
@@ -65,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error preparing statement: " . $conn->error);
     }
 
-    // Bind parameters: 'isss' for integer (stud_id), string (password), string (name), string (email)
+    
     $stmt->bind_param("isss", $stud_id, $hashed_password, $stud_name, $stud_email);
 
     if ($stmt->execute()) {
