@@ -1,18 +1,17 @@
 <?php
-// Include the database connection file
-// CORRECTED PATH: Go up one directory, then into the 'database' folder
+
 require_once '../database/connect.php';
 
-// Check if the form was submitted using POST method
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and retrieve form data
+    
     $tutor_id = $conn->real_escape_string($_POST['tutor_id']); // Now directly getting tutor_id
     $tutor_name = $conn->real_escape_string($_POST['tutor_name']); // New field for tutor name
     $tutor_email = $conn->real_escape_string($_POST['email']); // Assuming tutor_email column exists
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Basic validation
+    
     if (empty($tutor_id) || empty($tutor_name) || empty($tutor_email) || empty($password) || empty($confirm_password)) {
         echo "<script>alert('Please fill in all required fields.'); window.location.href='registertutor.html';</script>";
         exit();
@@ -56,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_check_email->close();
 
-    // Prepare an SQL statement for insertion, including tutor_id and tutor_name
-    // This assumes you have added a 'tutor_email' column to your Tutor table.
+    
     $sql = "INSERT INTO Tutor (tutor_id, tutor_password, tutor_name, tutor_email) VALUES (?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
@@ -66,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error preparing statement: " . $conn->error);
     }
 
-    // Bind parameters: 'isss' for integer (tutor_id), string (password), string (name), string (email)
+    
     $stmt->bind_param("isss", $tutor_id, $hashed_password, $tutor_name, $tutor_email);
 
     if ($stmt->execute()) {
