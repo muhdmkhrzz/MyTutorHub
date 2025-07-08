@@ -84,7 +84,9 @@ body {
 
 .sidebar-nav {
     width: 100%;
-    flex-grow: 1; /* Allows navigation to take available space */
+}
+.sidebar-nav.logout-nav {
+    margin-top: auto; /* Pushes the logout nav to the bottom */
 }
 
 .sidebar-nav ul {
@@ -312,38 +314,33 @@ body {
 
 .modal-content {
     background-color: #fefefe;
-    margin: auto; /* Center the modal */
+    margin: auto;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     position: relative;
-    width: 90%; /* Default width */
-    max-width: 500px; /* Max width for larger screens */
-    animation-name: animatetop;
-    animation-duration: 0.4s;
+    max-width: 600px; /* Default max-width for modals */
+    width: 90%; /* Responsive width */
+    color: var(--dark-color);
 }
 
-@keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+.modal-content.large-modal {
+    max-width: 800px; /* Larger modal for class details */
 }
 
-/* Common Close Button for all Modals */
-.close-modal,
-.close-modal-create,
-.close-modal-add-resource,
-.close-modal-edit-resource,
-.close-modal-edit-class,
-.close-modal-confirm-delete
-{
+.modal-content.small-modal {
+    max-width: 400px; /* Smaller modal for confirmations */
+    text-align: center;
+}
+
+.close-modal, .close-modal-create, .close-modal-add-resource, .close-modal-edit-resource, .close-modal-edit, .close-modal-confirm-delete {
     color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
+    float: right;
     font-size: 28px;
     font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 .close-modal:hover,
@@ -354,36 +351,147 @@ body {
 .close-modal-add-resource:focus,
 .close-modal-edit-resource:hover,
 .close-modal-edit-resource:focus,
-.close-modal-edit-class:hover,
-.close-modal-edit-class:focus,
+.close-modal-edit:hover,
+.close-modal-edit:focus,
 .close-modal-confirm-delete:hover,
-.close-modal-confirm-delete:focus
-{
-    color: #000;
+.close-modal-confirm-delete:focus {
+    color: #333;
     text-decoration: none;
+    cursor: pointer;
 }
 
-/* MODIFIED: Styling for modal details to be more adaptive */
-.modal-details {
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+/* Form Group Styling (for modals) */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="url"],
+.form-group input[type="file"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--dark-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="time"]:focus,
+.form-group input[type="url"]:focus,
+.form-group input[type="file"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(124, 79, 224, 0.2); /* Light primary color shadow */
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+.modal-actions {
+    margin-top: 25px;
     display: flex;
-    flex-direction: column;
-    gap: 10px; /* Space between each detail item */
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.modal-actions .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-actions-confirm {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Primary Button Style */
+.btn.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3);
+}
+
+.btn.primary-btn:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
+}
+
+/* Delete Button Style */
+.btn.delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+}
+
+.btn.delete-btn:hover {
+    background-color: #d32f2f;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
+}
+
+
+/* Modal Specific Details Layout (Class Details Modal) */
+.modal-details-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 10px;
     margin-bottom: 20px;
 }
 
-.modal-details p {
-    display: flex;
-    align-items: flex-start; /* Align icon and text to the top */
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.4; /* Improve readability for multi-line text */
+@media (min-width: 600px) {
+    .modal-details-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on larger screens */
+    }
+    .modal-details-grid p:nth-child(5) { /* Description spans two columns */
+        grid-column: span 2;
+    }
 }
 
-.modal-details p i {
+.modal-details-grid p {
+    font-size: 1rem;
+    color: #555;
+    display: flex;
+    align-items: flex-start; /* Align icon and text at the top */
+}
+
+.modal-details-grid p i {
     margin-right: 10px;
-    color: var(--primary-color);
-    font-size: 1.1rem; /* Slightly larger icons for better visibility */
+    color: var(--accent-color);
+    font-size: 1.1em;
     flex-shrink: 0; /* Prevent icon from shrinking */
     padding-top: 2px; /* Small adjustment for vertical alignment with text */
 }
@@ -405,332 +513,37 @@ body {
 
 /* Specific styling for the file icon within the link */
 #modal-class-file-link .file-icon {
-    margin-right: 5px; /* Adjust space between file icon and text if different from other icons */
-    font-size: 0.9rem; /* Slightly smaller icon to match text better */
+    font-size: 1rem; /* Adjust size as needed */
+    margin-right: 5px; /* Space between icon and text */
+    color: var(--secondary-color); /* Color for the file icon */
 }
 
 
-/* NEW: Styles for modal action buttons (like in Class Modal) */
-.modal-actions {
+/* --- Resources Section Styles --- */
+.add-resource-btn {
+    margin-bottom: 20px;
     display: flex;
-    justify-content: space-around;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-}
-
-.modal-actions .btn {
-    flex: 1 1 auto; /* Allow buttons to grow/shrink */
-    min-width: 120px; /* Minimum width for buttons */
-    padding: 10px 15px;
-    font-size: 0.95rem;
-    margin-top: 0; /* Override default margin */
-}
-
-.modal-content .btn {
-    /* Existing styles for general modal buttons, ensure consistency */
-    margin-top: 20px; /* Default margin for single buttons */
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modal-content .btn:hover {
-    background-color: var(--secondary-color);
-}
-
-/* NEW: Delete button specific style */
-.modal-actions .delete-btn {
-    background-color: #f44336; /* Red color for delete */
-    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
-}
-
-.modal-actions .delete-btn:hover {
-    background-color: #d32f2f; /* Darker red on hover */
-    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
-}
-
-
-/* Placeholder Content Styling - REMOVED PLACEHOLDER-RESOURCES, CHART */
-.placeholder-content {
-    background-color: #f0f0f5;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    color: #777;
-    font-style: italic;
-    margin-top: 20px;
-}
-
-.placeholder-chart { /* Kept for Reports section */
-    background-color: #e0e0e5;
-    height: 150px;
-    border-radius: 8px;
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    color: #aaa;
-    font-size: 0.9rem;
-    border: 1px dashed #ccc;
+    gap: 8px;
 }
 
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-    .sidebar {
-        width: 200px;
-        padding: 15px;
-    }
-    .sidebar-header h1 {
-        font-size: 1.6rem;
-    }
-    .sidebar-nav a {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-    }
-    .sidebar-nav a i {
-        margin-right: 10px;
-        font-size: 1rem;
-    }
-    .main-content {
-        padding: 20px;
-    }
-    .content-section {
-        padding: 20px;
-    }
-    .content-section h2 {
-        font-size: 1.6rem;
-    }
-    .class-card {
-        flex: 1 1 calc(50% - 20px); /* Two cards per row */
-    }
-    .my-classes-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-container {
-        flex-direction: column; /* Stack sidebar and main content */
-    }
-    .sidebar {
-        width: 100%;
-        height: auto; /* Auto height for mobile */
-        position: relative; /* No longer sticky */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        padding-bottom: 0;
-    }
-    .sidebar-header {
-        display: none; /* Hide large header on small screens */
-    }
-    .sidebar .welcome-message {
-        margin-bottom: 20px;
-    }
-    .sidebar-nav ul {
-        display: flex; /* Horizontal navigation for mobile */
-        flex-wrap: wrap; /* Allow wrapping */
-        padding: 10px 0;
-        justify-content: space-around; /* Distribute links evenly */
-    }
-    
-    .sidebar-nav li {
-        flex: 0 0 auto; /* Prevent items from shrinking */
-        margin: 0 5px; /* Add horizontal margin */
-    }
-
-    .sidebar-nav li a {
-        flex-direction: column; /* Stack icon and text */
-        padding: 10px;
-        font-size: 0.8rem;
-    }
-
-    .sidebar-nav li a span {
-        display: block; /* Show text again */
-    }
-    
-    .main-content {
-        margin-left: 0; /* No left margin */
-        width: 100%;
-        padding: 20px; /* Adjust padding */
-    }
-    
-    .schedule-cards,
-    .my-classes-grid {
-        flex-direction: column; /* Stack cards vertically */
-    }
-    
-.class-card,
-.class-tile {
-        min-width: 100%; /* Full width for cards */
-    }
-
-    .modal-content {
-        width: 95%; /* Slightly more width on mobile */
-    }
-
-    .modal-actions {
-        flex-direction: column; /* Stack buttons vertically on small screens */
-    }
-    .modal-actions .btn {
-        min-width: 100%; /* Full width for buttons */
-    }
-}
-
-/* --- Styles for Create Class Modal Form --- */
-#create-class-modal .modal-content {
-    max-width: 600px; /* Adjust max-width for the form modal if needed */
-}
-
-#create-class-form .form-group {
-    margin-bottom: 15px;
-}
-
-#create-class-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--dark-color);
-    font-size: 0.95rem;
-}
-
-#create-class-form input[type="text"],
-#create-class-form input[type="email"],
-#create-class-form input[type="password"],
-#create-class-form input[type="date"],
-#create-class-form input[type="time"],
-#create-class-form input[type="number"],
-#create-class-form textarea,
-#create-class-form select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.add-resource-btn i {
     font-size: 1rem;
-    color: var(--dark-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#create-class-form input:focus,
-#create-class-form textarea:focus,
-#create-class-form select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(124, 79, 224, 0.2); /* Light primary color shadow */
-    outline: none;
-}
-
-#create-class-form textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 80px;
-}
-
-#create-class-form .primary-btn {
-    width: 100%;
-    margin-top: 20px;
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3);
-}
-
-#create-class-form .primary-btn:hover {
-    background: var(--secondary-color);
-    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
-}
-
-/* Specific styling for the close button on the create class modal */
-.close-modal-create {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-modal-create:hover,
-.close-modal-create:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-
-/* --- Notification Element Styling --- */
-.notification {
-    display: none; /* Hidden by default, shown by JS */
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4CAF50; /* Default green for success */
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 1001; /* Above modals */
-    font-size: 1rem;
-    text-align: center;
-    opacity: 0; /* Start hidden for fade-in */
-    transition: opacity 0.3s ease-in-out;
-}
-
-.notification.success {
-    background-color: #4CAF50; /* Green */
-}
-
-.notification.error {
-    background-color: #f44336; /* Red */
-}
-
-.notification.info {
-    background-color: #2196F3; /* Blue */
-}
-
-.notification[style*="display: block"] {
-    opacity: 1; /* Fade in when displayed */
-}
-
-/* Responsive adjustments for modals and notifications */
-@media (max-width: 768px) {
-    #create-class-modal .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
-
-    #create-class-form input,
-    #create-class-form textarea,
-    #create-class-form select {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
-
-    .notification {
-        width: 90%;
-        font-size: 0.9rem;
-        padding: 12px 20px;
-    }
-}
-
-/* --- New Styles for Resources Section (Box Layout) --- */
 .resources-list {
-    display: grid; /* Use CSS Grid for a flexible box layout */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive columns */
-    gap: 20px; /* Space between resource cards */
-    margin-top: 20px; /* Space below the Add New Resource button */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
 }
 
 .resource-item-card {
-    background-color: var(--card-bg); /* Use a consistent card background */
+    background-color: var(--card-bg);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative; /* For absolute positioning of action buttons */
+    position: relative; /* Needed for absolute positioning of action buttons */
     display: flex; /* Use flexbox for internal layout */
     flex-direction: column; /* Stack content vertically */
     justify-content: space-between; /* Push actions to bottom if content varies */
@@ -753,366 +566,30 @@ body {
 .resource-item-card p {
     font-size: 0.95rem;
     color: #555;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.resource-item-card p:last-of-type { /* Target the last paragraph for margin adjustment */
-    margin-bottom: 0;
-}
-
-.resource-item-card strong {
-    color: var(--secondary-color);
-    margin-right: 8px;
-    min-width: 100px; /* Align labels */
-    display: inline-block;
-}
-
-.resource-item-card a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    transition: color 0.2s ease;
-    word-break: break-all; /* Ensure long filenames wrap */
-}
-
-.resource-item-card a:hover {
-    color: var(--secondary-color);
-    text-decoration: underline;
-}
-
-.resource-item-card a i {
-    margin-right: 8px;
-    color: var(--accent-color);
-}
-
-/* Add New Resource Button Styling */
-.add-resource-btn {
-    margin-bottom: 20px; /* Space below the button */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Space between icon and text */
-    padding: 10px 20px;
-    font-size: 1rem;
-}
-
-/* Styles for Add Resource Modal Form (similar to Create Class Modal) */
-#add-resource-modal .modal-content {
-    max-width: 600px;
-}
-
-#add-resource-form .form-group {
     margin-bottom: 15px;
+    flex-grow: 1; /* Allows text to take available space */
 }
 
-#add-resource-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--dark-color);
-    font-size: 0.95rem;
-}
-
-/* Styling for file input */
-#add-resource-form input[type="file"],
-#edit-resource-form input[type="file"] {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: var(--dark-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fdfdff; /* Consistent with other inputs */
-}
-
-#add-resource-form input[type="file"]::file-selector-button,
-#edit-resource-form input[type="file"]::file-selector-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 15px;
-    transition: background-color 0.3s ease;
-}
-
-#add-resource-form input[type="file"]::file-selector-button:hover,
-#edit-resource-form input[type="file"]::file-selector-button:hover {
-    background-color: var(--secondary-color);
-}
-
-
-#add-resource-form input[type="text"],
-#add-resource-form select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: var(--dark-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#add-resource-form input:focus,
-#add-resource-form select:focus,
-#add-resource-form input[type="file"]:focus { /* Added file input focus */
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(124, 79, 224, 0.2);
-    outline: none;
-}
-
-#add-resource-form .primary-btn {
-    width: 100%;
-    margin-top: 20px;
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3);
-}
-
-#add-resource-form .primary-btn:hover {
-    background: var(--secondary-color);
-    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
-}
-
-/* Specific styling for the close button on the add resource modal */
-.close-modal-add-resource {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-modal-add-resource:hover,
-.close-modal-add-resource:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-/* --- NEW: Edit Resource Modal Styles (similar to Add Resource Modal) --- */
-#edit-resource-modal .modal-content {
-    max-width: 600px;
-}
-
-#edit-resource-form .form-group {
-    margin-bottom: 15px;
-}
-
-#edit-resource-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--dark-color);
-    font-size: 0.95rem;
-}
-
-#edit-resource-form input[type="text"],
-#edit-resource-form select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: var(--dark-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#edit-resource-form input:focus,
-#edit-resource-form select:focus,
-#edit-resource-form input[type="file"]:focus { /* Added file input focus */
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(124, 79, 224, 0.2);
-    outline: none;
-}
-
-/* Current file info in edit resource modal */
-.current-file-info {
-    font-size: 0.85rem;
-    color: #777;
-    margin-top: 5px;
-    margin-left: 5px; /* Indent slightly */
-}
-
-.current-file-info span {
-    font-weight: 600;
-    color: var(--dark-color);
-}
-
-
-#edit-resource-form .primary-btn {
-    width: 100%;
-    margin-top: 20px;
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3);
-}
-
-#edit-resource-form .primary-btn:hover {
-    background: var(--secondary-color);
-    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
-}
-
-/* Specific styling for the close button on the edit resource modal */
-.close-modal-edit-resource {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-modal-edit-resource:hover,
-.close-modal-edit-resource:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-/* --- NEW: Edit Class Modal Styles --- */
-#edit-class-modal .modal-content {
-    max-width: 600px; /* Adjust max-width for the form modal if needed */
-}
-
-#edit-class-form .form-group {
-    margin-bottom: 15px;
-}
-
-#edit-class-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--dark-color);
-    font-size: 0.95rem;
-}
-
-#edit-class-form input[type="text"],
-#edit-class-form input[type="url"], /* Added for class_file */
-#edit-class-form input[type="email"],
-#edit-class-form input[type="password"],
-#edit-class-form input[type="date"],
-#edit-class-form input[type="time"],
-#edit-class-form input[type="number"],
-#edit-class-form textarea,
-#edit-class-form select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: var(--dark-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#edit-class-form input:focus,
-#edit-class-form textarea:focus,
-#edit-class-form select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(124, 79, 224, 0.2);
-    outline: none;
-}
-
-#edit-class-form textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-#edit-class-form .primary-btn {
-    width: 100%;
-    margin-top: 20px;
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 10px rgba(124, 79, 224, 0.3);
-}
-
-#edit-class-form .primary-btn:hover {
-    background: var(--secondary-color);
-    box-shadow: 0 6px 15px rgba(94, 53, 177, 0.4);
-}
-
-.close-modal-edit-class {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-modal-edit-class:hover,
-.close-modal-edit-class:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-/* --- NEW: Confirm Delete Modal Styles --- */
-#confirm-delete-modal .modal-content {
-    max-width: 400px; /* Smaller modal for confirmation */
-    text-align: center;
-    padding-bottom: 20px; /* Adjust padding for buttons */
-}
-
-#confirm-delete-modal h2 {
-    font-size: 1.5rem;
-    color: #f44336; /* Red for warning */
-    border-bottom: none; /* No border for this modal title */
-    margin-bottom: 15px;
-}
-
-#confirm-delete-modal p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 25px;
-}
-
-.modal-actions-confirm {
+.resource-item-card .resource-actions {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.modal-actions-confirm .btn {
-    flex: 1; /* Make buttons take equal space */
-    max-width: 120px; /* Control max width */
-    margin-top: 0; /* Override default margin */
-}
-
-/* --- Resource Actions (Edit/Delete Buttons) --- */
-.resource-actions {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    gap: 5px; /* Space between buttons */
+    gap: 10px;
+    margin-top: auto; /* Push actions to the bottom */
+    justify-content: flex-end; /* Align buttons to the right */
 }
 
 .resource-actions .icon-btn {
     background: none;
     border: none;
-    color: var(--secondary-color); /* Icon color */
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     cursor: pointer;
+    color: var(--secondary-color);
+    transition: color 0.3s ease, transform 0.2s ease;
     padding: 5px;
-    border-radius: 50%; /* Make them round */
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.resource-actions .icon-btn:hover {
-    background-color: rgba(124, 79, 224, 0.1); /* Light background on hover */
+.resource-actions .icon-btn.edit-resource-btn:hover {
     color: var(--primary-color);
+    transform: scale(1.1);
 }
 
 .resource-actions .icon-btn.delete-resource-btn {
@@ -1120,17 +597,203 @@ body {
 }
 
 .resource-actions .icon-btn.delete-resource-btn:hover {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: #d32f2f; /* Darker red on hover */
+    color: #d32f2f;
+    transform: scale(1.1);
 }
 
-/* Responsive adjustments for resource actions */
+.resource-actions .icon-btn.download-resource-btn {
+    color: #4CAF50; /* Green for download */
+}
+
+.resource-actions .icon-btn.download-resource-btn:hover {
+    color: #388E3C;
+    transform: scale(1.1);
+}
+
+
+/* --- Notification Styles --- */
+#notification {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    z-index: 1100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Start hidden */
+    animation: fadeInOut 3s forwards; /* Animation for visibility */
+}
+
+#notification.success {
+    background-color: #4CAF50; /* Green */
+}
+
+#notification.error {
+    background-color: #f44336; /* Red */
+}
+
+#notification.info {
+    background-color: #2196F3; /* Blue */
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .resource-actions {
-        top: 10px;
-        right: 10px;
-        gap: 3px;
+    .sidebar {
+        width: 80px; /* Collapse sidebar on smaller screens */
+        padding: 15px 5px;
     }
+
+    .sidebar-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .sidebar .welcome-message {
+        display: none; /* Hide welcome message to save space */
+    }
+
+    .sidebar-nav a {
+        justify-content: center; /* Center icons when text is hidden */
+        padding: 10px 0;
+    }
+
+    .sidebar-nav a span {
+        display: none; /* Hide text in collapsed sidebar */
+    }
+
+    .sidebar-nav a i {
+        margin-right: 0; /* No margin when text is hidden */
+        font-size: 1.4rem;
+    }
+
+    .main-content {
+        padding: 20px 15px;
+    }
+
+    .content-section {
+        padding: 20px;
+    }
+
+    .content-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .class-card {
+        flex: 1 1 calc(50% - 10px); /* Two cards per row on smaller screens */
+        min-width: unset; /* Remove min-width to allow shrinking */
+    }
+
+    .my-classes-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .report-card {
+        padding: 20px;
+    }
+    .report-card h3 {
+        font-size: 1.2rem;
+    }
+    .report-card .report-value {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative; /* No longer sticky */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        flex-direction: row; /* Layout sidebar items horizontally */
+        justify-content: space-around;
+        overflow-x: auto; /* Enable horizontal scrolling for nav if needed */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    .sidebar-header {
+        display: none; /* Hide header on very small screens */
+    }
+
+    .sidebar-nav {
+        flex-grow: 0; /* Don't grow in row layout */
+        width: auto;
+    }
+
+    .sidebar-nav ul {
+        display: flex; /* Make nav items horizontal */
+        justify-content: center;
+        width: 100%;
+    }
+
+    .sidebar-nav li {
+        margin-bottom: 0;
+        margin: 0 10px; /* Space between horizontal items */
+    }
+
+    .sidebar-nav a {
+        flex-direction: column; /* Stack icon and text */
+        padding: 8px 5px;
+        font-size: 0.8rem;
+    }
+
+    .sidebar-nav a span {
+        display: block; /* Show text again, but smaller */
+        font-size: 0.75rem;
+        margin-top: 5px;
+    }
+
+    .sidebar-nav a i {
+        margin-right: 0;
+        font-size: 1.2rem;
+    }
+
+    /* Adjust main content padding */
+    .main-content {
+        padding: 15px;
+    }
+
+    .class-card {
+        flex: 1 1 100%; /* Single column layout for cards */
+    }
+
+    .my-classes-grid {
+        grid-template-columns: 1fr; /* Single column */
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .resource-actions .icon-btn {
         font-size: 1rem;
         padding: 3px;
@@ -1171,27 +834,15 @@ body {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    display: block;
 }
 
 .report-card .report-icon {
-    font-size: 3.5rem;
-    color: rgba(124, 79, 224, 0.2); /* Light primary color for background icon */
+    font-size: 3rem;
+    color: var(--accent-color);
+    opacity: 0.3;
     position: absolute;
-    bottom: -10px;
-    right: -10px;
-    z-index: 1;
-}
-
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-    .reports-summary-grid {
-        grid-template-columns: 1fr; /* Stack cards vertically on small screens */
-    }
-    .report-card .report-value {
-        font-size: 2rem;
-    }
-    .report-card .report-icon {
-        font-size: 3rem;
-    }
+    bottom: 15px;
+    right: 20px;
 }

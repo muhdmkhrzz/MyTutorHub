@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyTutorHub - Tutor Dashboard</title>
-    <!-- Link to the main stylesheet for overall styling -->
     <link rel="stylesheet" href="tutor.css">
-    <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Link to Google Fonts for 'Poppins' font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>MyTutorHub</h1>
@@ -26,31 +22,28 @@
                 <ul>
                     <li><a href="#dashboard-section" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
                     <li><a href="#my-classes-section"><i class="fas fa-book-open"></i> <span>My Classes</span></a></li>
-                    <!-- Removed Student Overview Link -->
                     <li><a href="#resources-section"><i class="fas fa-folder"></i> <span>Resources</span></a></li>
                     <li><a href="#reports-section"><i class="fas fa-chart-bar"></i> <span>Reports</span></a></li>
+                </ul>
+            </nav>
+            <nav class="sidebar-nav logout-nav">
+                <ul>
                     <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Dashboard Section: Displays today's schedule -->
             <section id="dashboard-section" class="content-section">
                 <h2>Today's Schedule</h2>
                 <div class="schedule-cards" id="today-schedule-container">
-                    <!-- Initial placeholder content (will be replaced by JS) -->
                     <p>No classes scheduled for today.</p>
                 </div>
             </section>
 
-            <!-- My Classes Section: Displays all classes -->
             <section id="my-classes-section" class="content-section">
                 <h2>My Classes</h2>
                 <div class="my-classes-grid" id="my-classes-container">
-                    <!-- Class Tiles will be dynamically loaded here by JavaScript -->
-                    <!-- Create New Class Tile - This should be present in the HTML -->
                     <div class="class-tile create-new" id="create-class-tile">
                         <i class="fas fa-plus-circle"></i>
                         <h3>Create Class</h3>
@@ -58,20 +51,16 @@
                 </div>
             </section>
 
-            <!-- Resources Section: Displays resources for each class -->
             <section id="resources-section" class="content-section">
                 <h2>Resources</h2>
-                <!-- Button to add new resource -->
                 <button class="btn primary-btn add-resource-btn" id="add-resource-button">
                     <i class="fas fa-plus"></i> Add New Resource
                 </button>
                 <div class="resources-list" id="resources-list-container">
-                    <!-- Class resources will be dynamically loaded here by JavaScript -->
                     <p>Loading resources...</p>
                 </div>
             </section>
 
-            <!-- Reports Section: Placeholder for class performance reports -->
             <section id="reports-section" class="content-section">
                 <h2>Reports Overview</h2>
                 <div class="reports-summary-grid">
@@ -82,220 +71,203 @@
                     </div>
                     <div class="report-card">
                         <h3>Total Student Bookings</h3>
-                        <p class="report-value"><span id="total-student-bookings">0</span> Bookings</p>
+                        <p class="report-value"><span id="total-student-bookings">0</span></p>
                         <i class="fas fa-users report-icon"></i>
                     </div>
                 </div>
-                <!-- You can add more detailed charts or tables here later if needed -->
-                <!-- Example placeholder for future charts -->
-                <div class="placeholder-chart" style="margin-top: 30px; height: 200px;">
-                    <p>Detailed charts and analytics will appear here.</p>
-                </div>
             </section>
+
+            <div id="class-modal" class="modal">
+                <div class="modal-content large-modal">
+                    <span class="close-modal">&times;</span>
+                    <h2 id="modal-class-title">Class Title</h2>
+                    <div class="modal-details-grid">
+                        <p><i class="fas fa-tag"></i> Course: <span id="modal-class-course"></span></p>
+                        <p><i class="far fa-calendar-alt"></i> Date: <span id="modal-class-date"></span></p>
+                        <p><i class="far fa-clock"></i> Time: <span id="modal-class-time"></span></p>
+                        <p><i class="fas fa-user-graduate"></i> Students: <span id="modal-class-students"></span></p>
+                        <p><i class="fas fa-info-circle"></i> Description: <span id="modal-class-description"></span></p>
+                        <p><i class="fas fa-dollar-sign"></i> Fee: RM<span id="modal-class-fee"></span></p>
+                        <p id="modal-class-deadline-container" style="display: none;"><i class="far fa-calendar-check"></i> Registration Deadline: <span id="modal-class-deadline"></span></p>
+                        <p id="modal-class-file-container" style="display: none;"><i class="fas fa-link"></i> Class File: <a href="#" id="modal-class-file-link" target="_blank"></a></p>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn primary-btn" id="edit-class-btn"><i class="fas fa-edit"></i> Edit Class</button>
+                        <button class="btn delete-btn" id="delete-class-btn"><i class="fas fa-trash-alt"></i> Delete Class</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="create-class-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal-create">&times;</span>
+                    <h2>Create New Class</h2>
+                    <form id="create-class-form">
+                        <div class="form-group">
+                            <label for="new_course_id">Course</label>
+                            <select id="new_course_id" name="course_id" required>
+                                <option value="">Loading courses...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_title">Class Title</label>
+                            <input type="text" id="new_class_title" name="class_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_description">Description (Optional)</label>
+                            <textarea id="new_class_description" name="class_description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_date">Date</label>
+                            <input type="date" id="new_class_date" name="class_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_starttime">Start Time</label>
+                            <input type="time" id="new_class_starttime" name="class_starttime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_endtime">End Time</label>
+                            <input type="time" id="new_class_endtime" name="class_endtime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_capacity">Capacity</label>
+                            <input type="number" id="new_class_capacity" name="class_capacity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_deadline">Registration Deadline (Optional)</label>
+                            <input type="date" id="new_class_deadline" name="class_deadline">
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_fee">Fee (RM)</label>
+                            <input type="number" step="0.01" id="new_class_fee" name="class_fee" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_class_file">Class File Link (Optional)</label>
+                            <input type="url" id="new_class_file" name="class_file" placeholder="e.g., https://yourdomain.com/slides.pdf">
+                        </div>
+                        <button type="submit" class="btn primary-btn">Create Class</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-resource-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal-add-resource">&times;</span>
+                    <h2>Add New Resource</h2>
+                    <form id="add-resource-form">
+                        <div class="form-group">
+                            <label for="resource_class_id">Select Class</label>
+                            <select id="resource_class_id" name="class_id" required>
+                                <option value="">Loading classes...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="resource_title">Resource Title</label>
+                            <input type="text" id="resource_title" name="resource_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="resource_file">Upload File</label>
+                            <input type="file" id="resource_file" name="resource_file" required>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Upload Resource</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="edit-resource-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal-edit-resource">&times;</span>
+                    <h2>Edit Resource</h2>
+                    <form id="edit-resource-form">
+                        <input type="hidden" id="edit_resource_id" name="resource_id">
+                        <div class="form-group">
+                            <label for="edit_resource_class_id">Select Class</label>
+                            <select id="edit_resource_class_id" name="class_id" required>
+                                <option value="">Loading classes...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_resource_title">Resource Title</label>
+                            <input type="text" id="edit_resource_title" name="edit_resource_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_resource_file">Upload New File (Optional)</label>
+                            <input type="file" id="edit_resource_file" name="edit_resource_file">
+                        </div>
+                        <button type="submit" class="btn primary-btn">Update Resource</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="edit-class-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal-edit">&times;</span>
+                    <h2>Edit Class</h2>
+                    <form id="edit-class-form">
+                        <input type="hidden" id="edit_class_id" name="class_id">
+                        <div class="form-group">
+                            <label for="edit_course_id">Course</label>
+                            <select id="edit_course_id" name="course_id" required>
+                                <option value="">Loading courses...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_title">Class Title</label>
+                            <input type="text" id="edit_class_title" name="class_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_description">Description (Optional)</label>
+                            <textarea id="edit_class_description" name="class_description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_date">Date</label>
+                            <input type="date" id="edit_class_date" name="class_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_starttime">Start Time</label>
+                            <input type="time" id="edit_class_starttime" name="class_starttime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_endtime">End Time</label>
+                            <input type="time" id="edit_class_endtime" name="class_endtime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_capacity">Capacity</label>
+                            <input type="number" id="edit_class_capacity" name="class_capacity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_deadline">Registration Deadline (Optional)</label>
+                            <input type="date" id="edit_class_deadline" name="class_deadline">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_fee">Fee (RM)</label>
+                            <input type="number" step="0.01" id="edit_class_fee" name="class_fee" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_class_file">Class File Link (Optional)</label>
+                            <input type="url" id="edit_class_file" name="class_file" placeholder="e.g., https://yourdomain.com/slides.pdf">
+                        </div>
+                        <button type="submit" class="btn primary-btn">Update Class</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="confirm-delete-modal" class="modal">
+                <div class="modal-content small-modal">
+                    <span class="close-modal-confirm-delete">&times;</span>
+                    <h2>Confirm Deletion</h2>
+                    <p>Are you sure you want to delete this class? This action cannot be undone.</p>
+                    <div class="modal-actions-confirm">
+                        <button class="btn delete-btn" id="confirm-delete-btn">Delete</button>
+                        <button class="btn primary-btn" id="cancel-delete-btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notification" class="notification" aria-live="polite"></div>
+
+            <script src="script.js"></script>
         </main>
     </div>
-
-    <!-- Class Modal Structure (for View/Manage Class) -->
-    <div id="class-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 id="modal-class-title"></h2>
-            <div class="modal-details">
-                <p><i class="far fa-calendar-alt"></i> Date: <span id="modal-class-date"></span></p>
-                <p><i class="far fa-clock"></i> Time: <span id="modal-class-time"></span></p>
-                <p><i class="fas fa-user-graduate"></i> Students: <span id="modal-class-students"></span></p>
-                <p><i class="fas fa-info-circle"></i> Description: <span id="modal-class-description"></span></p>
-                <p><i class="fas fa-dollar-sign"></i> Fee: RM<span id="modal-class-fee"></span></p>
-                <p><i class="fas fa-book"></i> Course: <span id="modal-class-course"></span></p>
-                <!-- Display Registration Deadline - Initially hidden, controlled by JS -->
-                <p id="modal-class-deadline-container" style="display: none;"><i class="fas fa-calendar-times"></i> Registration Deadline: <span id="modal-class-deadline"></span></p>
-                <!-- Display Class File Link - Initially hidden, controlled by JS -->
-                <p id="modal-class-file-container" style="display: none;"><i class="fas fa-file-alt"></i> Class File: <a href="#" id="modal-class-file-link" target="_blank" rel="noopener noreferrer">View File</a></p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn primary-btn" id="edit-class-btn"><i class="fas fa-edit"></i> Edit Class</button>
-                <button class="btn delete-btn" id="delete-class-btn"><i class="fas fa-trash-alt"></i> Delete Class</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Create Class Modal Structure -->
-    <div id="create-class-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-create">&times;</span>
-            <h2>Create New Class</h2>
-            <form id="create-class-form">
-                <div class="form-group">
-                    <label for="new_class_title">Class Title</label>
-                    <input type="text" id="new_class_title" name="class_title" required>
-                </div>
-                <div class="form-group">
-                    <label for="new_course_id">Course Name</label>
-                    <select id="new_course_id" name="course_id" required>
-                        <option value="">Select a Course</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_description">Description</label>
-                    <textarea id="new_class_description" name="class_description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_date">Date</label>
-                    <input type="date" id="new_class_date" name="class_date" required>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_starttime">Start Time</label>
-                    <input type="time" id="new_class_starttime" name="class_starttime" required>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_endtime">End Time</label>
-                    <input type="time" id="new_class_endtime" name="class_endtime" required>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_capacity">Capacity</label>
-                    <input type="number" id="new_class_capacity" name="class_capacity" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="new_class_deadline">Registration Deadline</label>
-                    <input type="date" id="new_class_deadline" name="class_deadline">
-                </div>
-                <div class="form-group">
-                    <label for="new_class_fee">Fee (RM)</label>
-                    <input type="number" step="0.01" id="new_class_fee" name="class_fee" required>
-                </div>
-                <!-- Class File Link input -->
-                <div class="form-group">
-                    <label for="new_class_file">Class File Link (Optional)</label>
-                    <input type="url" id="new_class_file" name="class_file" placeholder="e.g., https://yourdomain.com/slides.pdf">
-                </div>
-                <button type="submit" class="btn primary-btn">Create Class</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Resource Modal Structure -->
-    <div id="add-resource-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-add-resource">&times;</span>
-            <h2>Add New Resource</h2>
-            <form id="add-resource-form">
-                <div class="form-group">
-                    <label for="resource_class_id">Select Class</label>
-                    <select id="resource_class_id" name="resource_class_id" required>
-                        <option value="">Select a Class</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="resource_title">Resource Title</label>
-                    <input type="text" id="resource_title" name="resource_title" placeholder="e.g., Week 1 Lecture Notes" required>
-                </div>
-                <div class="form-group">
-                    <label for="resource_file">Upload File</label>
-                    <input type="file" id="resource_file" name="resource_file" required>
-                </div>
-                <button type="submit" class="btn primary-btn">Add Resource</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Edit Resource Modal Structure -->
-    <div id="edit-resource-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-edit-resource">&times;</span>
-            <h2>Edit Resource</h2>
-            <form id="edit-resource-form">
-                <input type="hidden" id="edit_resource_id" name="resource_id">
-                <div class="form-group">
-                    <label for="edit_resource_class_id">Select Class</label>
-                    <select id="edit_resource_class_id" name="edit_resource_class_id" required>
-                        <option value="">Select a Class</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit_resource_title">Resource Title</label>
-                    <input type="text" id="edit_resource_title" name="edit_resource_title" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_resource_file">Upload New File (Optional)</label>
-                    <input type="file" id="edit_resource_file" name="edit_resource_file">
-                    <p class="current-file-info" id="current-resource-file-info">Current File: <span id="current-resource-file-name">None</span></p>
-                </div>
-                <button type="submit" class="btn primary-btn">Update Resource</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Edit Class Modal Structure -->
-    <div id="edit-class-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-edit-class">&times;</span>
-            <h2>Edit Class Details</h2>
-            <form id="edit-class-form">
-                <input type="hidden" id="edit_class_id" name="class_id">
-                <div class="form-group">
-                    <label for="edit_class_title">Class Title</label>
-                    <input type="text" id="edit_class_title" name="class_title" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_course_id">Course Name</label>
-                    <select id="edit_course_id" name="course_id" required>
-                        <option value="">Select a Course</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_description">Description</label>
-                    <textarea id="edit_class_description" name="class_description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_date">Date</label>
-                    <input type="date" id="edit_class_date" name="class_date" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_starttime">Start Time</label>
-                    <input type="time" id="edit_class_starttime" name="class_starttime" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_endtime">End Time</label>
-                    <input type="time" id="edit_class_endtime" name="class_endtime" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_capacity">Capacity</label>
-                    <input type="number" id="edit_class_capacity" name="class_capacity" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_deadline">Registration Deadline</label>
-                    <input type="date" id="edit_class_deadline" name="class_deadline">
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_fee">Fee (RM)</label>
-                    <input type="number" step="0.01" id="edit_class_fee" name="class_fee" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit_class_file">Class File Link (Optional)</label>
-                    <input type="url" id="edit_class_file" name="class_file" placeholder="e.g., https://yourdomain.com/slides.pdf">
-                </div>
-                <button type="submit" class="btn primary-btn">Update Class</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Confirm Delete Modal Structure -->
-    <div id="confirm-delete-modal" class="modal">
-        <div class="modal-content small-modal">
-            <span class="close-modal-confirm-delete">&times;</span>
-            <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this class? This action cannot be undone.</p>
-            <div class="modal-actions-confirm">
-                <button class="btn delete-btn" id="confirm-delete-btn">Delete</button>
-                <button class="btn primary-btn" id="cancel-delete-btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Element -->
-    <div id="notification" class="notification" aria-live="polite"></div>
-
-    <!-- Link to the main JavaScript file for interactivity -->
-    <script src="script.js"></script>
 </body>
 </html>
