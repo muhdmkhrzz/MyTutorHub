@@ -6,45 +6,80 @@
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="student.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Added for side-by-side buttons in class-card */
-        .class-card .class_description button {
-            margin-right: 10px; /* Adjust spacing between buttons */
-            margin-bottom: 5px; /* For responsiveness on smaller screens */
-        }
-    </style>
+    <!-- Link to Google Fonts for 'Poppins' font, matching tutor.html -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <button class="mobile-menu-toggle" id="mobileMenuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
+    <div class="dashboard-container">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
 
-    <nav class="sidebar" id="sidebar" aria-label="Main navigation">
-        <img src="mytutorhub_logo.png" class="logo" alt="MyTutorHub Logo" loading="lazy">
-        <a href="#main-content" class="active"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="#classes-section"><i class="fas fa-calendar-check"></i> My Bookings</a>
-        <a href="#available-classes-section"><i class="fas fa-book-open"></i> Available Classes</a> <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-
-    <div class="main-content" id="main-content">
-        <div class="search-bar">
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="class-search" placeholder="Search for classes..." aria-label="Search classes">
+        <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+            <div class="sidebar-header">
+                <h1>MyTutorHub</h1>
             </div>
-            <span id="current-date" aria-live="polite"></span>
-        </div>
+            <a href="#dashboard-section" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="#my-bookings-section"><i class="fas fa-calendar-check"></i> <span>My Bookings</span></a>
+            <a href="#available-classes-section"><i class="fas fa-book-open"></i> <span>Available Classes</span></a>
+            <!-- Removed 'logout-link' class to remove red styling -->
+            <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        </nav>
 
-        <div class="welcome-panel">
-            <div class="text">
-                <h2>Welcome back, <span id="stud_name">Student</span>!</h2>
-                <p>New classes are available. Learn more about HTML and CSS.</p>
-                <button id="buy-lesson-btn" class="primary-btn">Buy Lesson</button>
-            </div>
-        </div>
+        <main class="main-content" id="main-content">
+            <section id="dashboard-section" class="content-section">
+                <!-- Removed the search-bar div entirely -->
+                <div class="welcome-panel">
+                    <div class="text">
+                        <h2>Welcome back, <span id="stud_name_panel">Student</span>!</h2>
+                        <p>New classes are available. Explore and book your next lesson.</p>
+                    </div>
+                </div>
+            </section>
 
-        <div id="buy-lesson-popup" class="popup-overlay" style="display: none;">
-            <div class="popup-content">
+            <section class="content-section" id="my-bookings-section">
+                <h2>My Bookings</h2>
+                <div class="classes-grid" id="booked-classes-container">
+                    <p id="no-booked-classes" style="display: block;">You have no booked classes yet.</p>
+                </div>
+                <div class="view-all-link">
+                    <a href="view-all-bookings.html" class="btn primary-btn" id="view-all-bookings-btn" aria-expanded="false">
+                        View All Bookings <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
+
+            <section class="content-section" id="available-classes-section">
+                <h2>Available Classes</h2>
+                <div class="table-container">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Tutor</th>
+                                <th>Date & Time</th>
+                                <th>Fee</th>
+                                <th>Capacity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="available-classes-container-table">
+                            <tr id="no-available-classes-row" style="display: table-row;"><td colspan="6">No available classes at the moment.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="view-all-link">
+                    <a href="view-all-available-classes.html" class="btn primary-btn" id="view-all-available-classes-btn" aria-expanded="false">
+                        View All Classes <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals (Popups) - Keep their structure consistent -->
+    <div class="popup-overlay" id="buy-lesson-popup" style="display: none;">
+        <div class="popup-content">
             <h3>Buy Lesson</h3>
             <p>Are you sure you want to buy this lesson?</p>
             <div class="lesson-details">
@@ -54,114 +89,10 @@
                 <p><strong>Date:</strong> <span class="class_date">01 Jan 2023</span></p>
             </div>
             <div class="popup-actions">
-                <a href="https://toyyibpay.com/MyTutorHub-Registration" id="confirm-buy-btn" class="primary-btn">Confirm</a>
-                <button id="close-buy-popup-btn" class="secondary-btn">Cancel</button>
-            </div>
+                <button class="primary-btn" id="confirm-buy-btn">Confirm</button>
+                <button class="secondary-btn" id="close-buy-popup-btn">Cancel</button>
             </div>
         </div>
-
-        <section class="classes-section" id="classes-section">
-            <div class="section-header">
-                <h2>My Bookings</h2> <a href="view-all-bookings.html" class="view-all-btn" id="view-all-classes" aria-expanded="false">
-                    View All Bookings
-                </a>
-            </div>
-            
-            <div class="classes-grid" id="booked-classes-container">
-                <article class="class-card">
-                    <h3 class="class_title">HTML Basics</h3>
-                    <div class="class_description">
-                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">15 Jun 2023</span></p>
-                        <p><i class="far fa-clock"></i> <span class="class_starttime">09:00 - 10:30</span></p>
-                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Sarah Johnson</span></p>
-                        <button class="review-btn" onclick="openRatingPopup('HTML Basics', 'Sarah Johnson', 101, 1)">Rate Class</button>
-                        <button class="review-btn" onclick="openTutorRatingPopup('Sarah Johnson', 1)">Rate Tutor</button>
-                    </div>
-                </article>
-                <article class="class-card">
-                    <h3 class="class_title">CSS Fundamentals</h3>
-                    <div class="class_description">
-                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">20 Jul 2023</span></p>
-                        <p><i class="far fa-clock"></i> <span class="class_starttime">11:00 - 12:30</span></p>
-                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">David Lee</span></p>
-                        <button class="review-btn" onclick="openRatingPopup('CSS Fundamentals', 'David Lee', 102, 1)">Rate Class</button>
-                        <button class="review-btn" onclick="openTutorRatingPopup('David Lee', 2)">Rate Tutor</button>
-                    </div>
-                </article>
-                <article class="class-card">
-                    <h3 class="class_title">JavaScript Intro</h3>
-                    <div class="class_description">
-                        <p><i class="far fa-calendar-alt"></i> <span class="class_date">01 Aug 2023</span></p>
-                        <p><i class="far fa-clock"></i> <span class="class_starttime">14:00 - 15:30</span></p>
-                        <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">Emily White</span></p>
-                        <button class="review-btn" onclick="openRatingPopup('JavaScript Intro', 'Emily White', 103, 1)">Rate Class</button>
-                        <button class="review-btn" onclick="openTutorRatingPopup('Emily White', 3)">Rate Tutor</button>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="lessons-section" id="available-classes-section"> <div class="section-header">
-                <h2>Available Classes</h2> <a href="view-all-available-classes.html" class="view-all-btn" id="view-all-lessons" aria-expanded="false">
-                    View All Classes
-                </a>
-            </div>
-            
-            <div class="table-container">
-                <table class="lessons-table">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Tutor</th>
-                            <th>Date & Time</th>
-                            <th>Fee</th>
-                            <th>Capacity</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="available-classes-container"> <tr>
-                            <td class="class_title">Advanced CSS</td>
-                            <td class="tutor_name">Sarah Johnson</td>
-                            <td class="lesson-datetime">
-                                <span class="class_date">25 Aug 2023</span>
-                                <span class="class_time">10:00-11:30</span>
-                            </td>
-                            <td class="class_fee">RM45.00</td>
-                            <td class="class_capacity">8</td>
-                            <td>
-                                <button class="book-btn" onclick="openBookPopup('Advanced CSS', 'Sarah Johnson', '25 Aug 2023', '10:00-11:30', '45.00', 201)">Book Now</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="class_title">React Basics</td>
-                            <td class="tutor_name">Jane Smith</td>
-                            <td class="lesson-datetime">
-                                <span class="class_date">05 Sep 2023</span>
-                                <span class="class_time">13:00-14:30</span>
-                            </td>
-                            <td class="class_fee">RM60.00</td>
-                            <td class="class_capacity">12</td>
-                            <td>
-                                <button class="book-btn" onclick="openBookPopup('React Basics', 'Jane Smith', '05 Sep 2023', '13:00-14:30', '60.00', 202)">Book Now</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="class_title">Python for Beginners</td>
-                            <td class="tutor_name">John Doe</td>
-                            <td class="lesson-datetime">
-                                <span class="class_date">10 Sep 2023</span>
-                                <span class="class_time">09:30-11:00</span>
-                            </td>
-                            <td class="class_fee">RM50.00</td>
-                            <td class="class_capacity">15</td>
-                            <td>
-                                <button class="book-btn" onclick="openBookPopup('Python for Beginners', 'John Doe', '10 Sep 2023', '09:30-11:00', '50.00', 203)">Book Now</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
     </div>
 
     <div class="popup-overlay" id="book-popup" style="display: none;">
@@ -174,9 +105,10 @@
                 <p><strong>Date:</strong> <span id="book-class-date"></span></p>
                 <p><strong>Time:</strong> <span id="book-class-time"></span></p>
                 <p><strong>Fee:</strong> <span id="book-class-fee"></span></p>
-                <input type="hidden" id="book-class-id"> </div>
+                <input type="hidden" id="book-class-id">
+            </div>
             <div class="popup-actions">
-                <a href="https://toyyibpay.com/MyTutorHub-Registration" class="primary-btn" onclick="confirmBookPopup().then(() => { window.location.href = this.href; }); return false;">Confirm</a>
+                <button class="primary-btn" id="confirm-book-btn">Confirm</button>
                 <button class="secondary-btn" onclick="closeBookPopup()">Cancel</button>
             </div>
         </div>
@@ -225,315 +157,6 @@
 
     <div id="notification" class="notification" aria-live="polite"></div>
 
-    <script>
-        // Global variables for popups
-        let currentBookingClassId = null;
-        let selectedClassRating = 0; // Renamed for clarity
-        let selectedTutorRating = 0; // New variable for tutor rating
-
-        // --- General Popup Functions ---
-        function showNotification(message, autoHide = true) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.add('show');
-            if (autoHide) {
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-        }
-
-        // --- Mobile Menu Toggle ---
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('main-content').classList.toggle('active');
-        });
-
-        // --- Current Date Display ---
-        document.addEventListener('DOMContentLoaded', function() {
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', dateOptions);
-        });
-
-        // --- Buy Lesson Popup (General) ---
-        const buyLessonBtn = document.getElementById('buy-lesson-btn');
-        const buyLessonPopup = document.getElementById('buy-lesson-popup');
-        const closeBuyPopupBtn = document.getElementById('close-buy-popup-btn');
-        const confirmBuyBtn = document.getElementById('confirm-buy-btn');
-
-        if (buyLessonBtn) {
-            buyLessonBtn.addEventListener('click', () => {
-                buyLessonPopup.style.display = 'flex';
-            });
-        }
-
-        if (closeBuyPopupBtn) {
-            closeBuyPopupBtn.addEventListener('click', () => {
-                buyLessonPopup.style.display = 'none';
-            });
-        }
-
-
-        // Optional: close buy lesson popup when clicking outside content
-        if (buyLessonPopup) {
-            buyLessonPopup.addEventListener('click', (e) => {
-                if (e.target === buyLessonPopup) {
-                    buyLessonPopup.style.display = 'none';
-                }
-            });
-        }
-
-
-        // --- Book Now Popup (Specific Class Booking) ---
-        function openBookPopup(title, tutor, date, time, fee, classId) {
-            document.getElementById('book-class-title').textContent = title;
-            document.getElementById('book-class-tutor').textContent = tutor;
-            document.getElementById('book-class-date').textContent = date;
-            document.getElementById('book-class-time').textContent = time;
-            document.getElementById('book-class-fee').textContent = 'RM' + fee;
-            document.getElementById('book-class-id').value = classId; // Set hidden input value
-            currentBookingClassId = classId; // Store class ID for confirm function
-            document.getElementById('book-popup').style.display = 'flex';
-        }
-
-        function closeBookPopup() {
-            document.getElementById('book-popup').style.display = 'none';
-        }
-
-        async function confirmBookPopup() {
-            const classId = document.getElementById('book-class-id').value;
-            closeBookPopup(); // Close the popup immediately
-
-            showNotification('Booking class...', false); // Show loading message
-
-            try {
-                const response = await fetch('student.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `action=book_class&class_id=${classId}`
-                });
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    showNotification(result.message, true);
-                    // Reload the page to reflect updated capacities and booked classes
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                } else {
-                    showNotification(result.message, true);
-                }
-            } catch (error) {
-                console.error('Error booking class:', error);
-                showNotification('An error occurred during booking.', true);
-            }
-        }
-
-        // Optional: close book popup when clicking outside content
-        document.addEventListener('DOMContentLoaded', function() {
-            const bookPopup = document.getElementById('book-popup');
-            if (bookPopup) {
-                bookPopup.addEventListener('click', function(e) {
-                    if (e.target === bookPopup) {
-                        closeBookPopup();
-                    }
-                });
-            }
-        });
-
-        // --- Rating Popup Logic (for Class) ---
-        function openRatingPopup(classTitle, tutorName, classId, studId) {
-            document.getElementById('rating-class-title').textContent = classTitle;
-            document.getElementById('rating-tutor-name').textContent = tutorName;
-            document.getElementById('rating-class-id').value = classId;
-            document.getElementById('rating-stud-id').value = studId; // Assuming stud_id is always 1 for static HTML
-            document.getElementById('rating-popup').style.display = 'flex';
-            resetClassStars(); // Reset stars specifically for class rating
-        }
-
-        function closeRatingPopup() {
-            document.getElementById('rating-popup').style.display = 'none';
-        }
-
-        function resetClassStars() {
-            selectedClassRating = 0;
-            document.querySelectorAll('#star-rating .star').forEach(star => {
-                star.classList.remove('selected');
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const classStars = document.querySelectorAll('#star-rating .star');
-
-            classStars.forEach(star => {
-                star.addEventListener('click', function() {
-                    selectedClassRating = parseInt(this.getAttribute('data-value'));
-                    classStars.forEach((s, i) => {
-                        if (i < selectedClassRating) {
-                            s.classList.add('selected');
-                        } else {
-                            s.classList.remove('selected');
-                        }
-                    });
-                });
-            });
-
-            document.getElementById('close-rating-popup-btn').onclick = closeRatingPopup;
-
-            document.getElementById('submit-class-rating-btn').onclick = async function() {
-                if (selectedClassRating === 0) {
-                    showNotification('Please select a star rating for the class.', true);
-                    return;
-                }
-
-                const classId = document.getElementById('rating-class-id').value;
-                const studId = document.getElementById('rating-stud-id').value;
-                
-                closeRatingPopup();
-                showNotification('Submitting class rating...', false);
-
-                try {
-                    const response = await fetch('student.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `action=submit_class_rating&class_id=${classId}&stud_id=${studId}&rating=${selectedClassRating}`
-                    });
-                    const result = await response.json();
-
-                    if (result.status === 'success') {
-                        showNotification(result.message, true);
-                        setTimeout(() => {
-                            window.location.reload(); // Reload to show updated ratings
-                        }, 1000);
-                    } else {
-                        showNotification(result.message, true);
-                    }
-                } catch (error) {
-                    console.error('Error submitting class rating:', error);
-                    showNotification('An error occurred while submitting class rating.', true);
-                }
-            };
-        });
-
-        // Optional: close class rating popup when clicking outside content
-        document.addEventListener('DOMContentLoaded', function() {
-            const ratingPopup = document.getElementById('rating-popup');
-            if (ratingPopup) {
-                ratingPopup.addEventListener('click', function(e) {
-                    if (e.target === ratingPopup) {
-                        closeRatingPopup();
-                    }
-                });
-            }
-        });
-
-        // --- Rating Popup Logic (for Tutor) ---
-        function openTutorRatingPopup(tutorName, tutorId) {
-            document.getElementById('tutor-rating-tutor-name').textContent = tutorName;
-            document.getElementById('tutor-rating-tutor-id').value = tutorId;
-            document.getElementById('tutor-rating-stud-id').value = 1; // Assuming stud_id is always 1
-            document.getElementById('tutor-rating-popup').style.display = 'flex';
-            resetTutorStars(); // Reset stars specifically for tutor rating
-        }
-
-        function closeTutorRatingPopup() {
-            document.getElementById('tutor-rating-popup').style.display = 'none';
-        }
-
-        function resetTutorStars() {
-            selectedTutorRating = 0;
-            document.querySelectorAll('#tutor-star-rating .star').forEach(star => {
-                star.classList.remove('selected');
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const tutorStars = document.querySelectorAll('#tutor-star-rating .star');
-
-            tutorStars.forEach(star => {
-                star.addEventListener('click', function() {
-                    selectedTutorRating = parseInt(this.getAttribute('data-value'));
-                    tutorStars.forEach((s, i) => {
-                        if (i < selectedTutorRating) {
-                            s.classList.add('selected');
-                        } else {
-                            s.classList.remove('selected');
-                        }
-                    });
-                });
-            });
-
-            document.getElementById('close-tutor-rating-popup-btn').onclick = closeTutorRatingPopup;
-
-            document.getElementById('submit-tutor-rating-btn').onclick = async function() {
-                if (selectedTutorRating === 0) {
-                    showNotification('Please select a star rating for the tutor.', true);
-                    return;
-                }
-
-                const tutorId = document.getElementById('tutor-rating-tutor-id').value;
-                const studId = document.getElementById('tutor-rating-stud-id').value;
-                
-                closeTutorRatingPopup();
-                showNotification('Submitting tutor rating...', false);
-
-                try {
-                    const response = await fetch('student.php', { // Assuming student.php handles tutor ratings
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `action=submit_tutor_rating&tutor_id=${tutorId}&stud_id=${studId}&rating=${selectedTutorRating}`
-                    });
-                    const result = await response.json();
-
-                    if (result.status === 'success') {
-                        showNotification(result.message, true);
-                        setTimeout(() => {
-                            window.location.reload(); // Reload to show updated ratings
-                        }, 1000);
-                    } else {
-                        showNotification(result.message, true);
-                    }
-                } catch (error) {
-                    console.error('Error submitting tutor rating:', error);
-                    showNotification('An error occurred while submitting tutor rating.', true);
-                }
-            };
-        });
-
-        // Optional: close tutor rating popup when clicking outside content
-        document.addEventListener('DOMContentLoaded', function() {
-            const tutorRatingPopup = document.getElementById('tutor-rating-popup');
-            if (tutorRatingPopup) {
-                tutorRatingPopup.addEventListener('click', function(e) {
-                    if (e.target === tutorRatingPopup) {
-                        closeTutorRatingPopup();
-                    }
-                });
-            }
-        });
-
-
-        // --- Search Bar Functionality (Basic Example) ---
-        document.getElementById('class-search').addEventListener('keyup', function() {
-            const searchValue = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#available-classes-container tr');
-            rows.forEach(row => {
-                const classTitle = row.querySelector('.class_title').textContent.toLowerCase();
-                const tutorName = row.querySelector('.tutor_name').textContent.toLowerCase();
-                if (classTitle.includes(searchValue) || tutorName.includes(searchValue)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-
-    </script>
+    <script src="student.js"></script>
 </body>
 </html>

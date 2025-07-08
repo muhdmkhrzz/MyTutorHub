@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Classes - MyTutorHub</title>
+    <link rel="stylesheet" href="student.css"> <!-- Assuming student.css is in the same directory -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic styling for this specific page, can be moved to student.css if preferred */
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-bar-full {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            align-items: center;
+        }
+        .search-bar-full input[type="text"] {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .search-bar-full i {
+            color: var(--text-light);
+            margin-left: 5px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .classes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .classes-table th, .classes-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .classes-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .classes-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .classes-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        .no-classes-message {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        .back-button:hover {
+            background-color: var(--primary-hover);
+        }
+        .book-btn {
+            padding: 8px 12px;
+            background-color: #4CAF50; /* Green for Book Now */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        .book-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            .search-bar-full {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .classes-table th, .classes-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="student.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        <h1>Available Classes</h1>
+
+        <div class="search-bar-full">
+            <i class="fas fa-search"></i>
+            <input type="text" id="available-class-search" placeholder="Search by class title or tutor name..." aria-label="Search available classes">
+        </div>
+
+        <div class="table-container">
+            <table class="classes-table">
+                <thead>
+                    <tr>
+                        <th>Class Title</th>
+                        <th>Tutor Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Capacity</th>
+                        <th>Fee</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="available-classes-table-body">
+                    <!-- Available classes will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+            <p id="no-available-classes-message" class="no-classes-message" style="display: none;">No available classes at the moment.</p>
+        </div>
+    </div>
+
+    <!-- Book Class Popup (reused from student.html) -->
+    <div class="popup-overlay" id="book-popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Book Class</h3>
+            <p>Are you sure you want to book this class?</p>
+            <div class="lesson-details">
+                <p><strong>Class:</strong> <span id="book-class-title"></span></p>
+                <p><strong>Tutor:</strong> <span id="book-class-tutor"></span></p>
+                <p><strong>Date:</strong> <span id="book-class-date"></span></p>
+                <p><strong>Time:</strong> <span id="book-class-time"></span></p>
+                <p><strong>Fee:</strong> <span id="book-class-fee"></span></p>
+                <input type="hidden" id="book-class-id">
+            </div>
+            <div class="popup-actions">
+                <a href="https://toyyibpay.com/MyTutorHub-Registration" class="primary-btn" onclick="confirmBookPopup().then(() => { window.location.href = this.href; }); return false;">Confirm</a>
+                <button class="secondary-btn" onclick="closeBookPopup()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification" aria-live="polite"></div>
+
+    <script>
+        // --- General Popup Functions (copied from student.html) ---
+        function showNotification(message, autoHide = true) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            if (autoHide) {
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // --- Book Now Popup (Specific Class Booking - copied from student.html) ---
+        // Note: This function requires 'stud_id' which is typically from a session.
+        // For this page, we'll assume the student is logged in and the PHP backend handles stud_id from session.
+        function openBookPopup(title, tutor, date, time, fee, classId) {
+            document.getElementById('book-class-title').textContent = title;
+            document.getElementById('book-class-tutor').textContent = tutor;
+            document.getElementById('book-class-date').textContent = date;
+            document.getElementById('book-class-time').textContent = time;
+            document.getElementById('book-class-fee').textContent = 'RM' + fee;
+            document.getElementById('book-class-id').value = classId; // Set hidden input value
+            document.getElementById('book-popup').style.display = 'flex';
+        }
+
+        function closeBookPopup() {
+            document.getElementById('book-popup').style.display = 'none';
+        }
+
+        async function confirmBookPopup() {
+            const classId = document.getElementById('book-class-id').value;
+            closeBookPopup(); // Close the popup immediately
+
+            showNotification('Booking class...', false); // Show loading message
+
+            try {
+                const response = await fetch('../database/student.php', { // Updated path
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=book_class&class_id=${classId}`
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    showNotification(result.message, true);
+                    // Refresh the list of available classes after successful booking
+                    setTimeout(() => {
+                        fetchAllAvailableClassesContent();
+                    }, 1000);
+                } else {
+                    showNotification(result.message, true);
+                }
+            } catch (error) {
+                console.error('Error booking class:', error);
+                showNotification('An error occurred during booking.', true);
+            }
+        }
+
+        // Optional: close book popup when clicking outside content
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookPopup = document.getElementById('book-popup');
+            if (bookPopup) {
+                bookPopup.addEventListener('click', function(e) {
+                    if (e.target === bookPopup) {
+                        closeBookPopup();
+                    }
+                });
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllAvailableClassesContent();
+
+            // Search functionality
+            document.getElementById('available-class-search').addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#available-classes-table-body tr');
+                let foundResults = false;
+
+                rows.forEach(row => {
+                    const classTitle = row.querySelector('.available-class-title').textContent.toLowerCase();
+                    const tutorName = row.querySelector('.available-tutor-name').textContent.toLowerCase();
+                    if (classTitle.includes(searchValue) || tutorName.includes(searchValue)) {
+                        row.style.display = '';
+                        foundResults = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                const noClassesMessage = document.getElementById('no-available-classes-message');
+                if (noClassesMessage) {
+                    noClassesMessage.style.display = foundResults ? 'none' : 'block';
+                }
+            });
+        });
+
+        async function fetchAllAvailableClassesContent() {
+            const availableClassesTableBody = document.getElementById('available-classes-table-body');
+            const noClassesMessage = document.getElementById('no-available-classes-message');
+            
+            availableClassesTableBody.innerHTML = ''; // Clear existing content
+            if (noClassesMessage) {
+                noClassesMessage.style.display = 'none'; // Hide message initially
+            }
+
+            try {
+                const response = await fetch('../database/student.php', { // Updated path
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=fetch_all_available_classes'
+                });
+                const result = await response.json();
+
+                if (result.status === 'success' && result.data.length > 0) {
+                    result.data.forEach(cls => {
+                        const row = `
+                            <tr>
+                                <td class="available-class-title">${cls.class_title}</td>
+                                <td class="available-tutor-name">${cls.tutor_name}</td>
+                                <td>${new Date(cls.class_date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                                <td>${cls.class_starttime.substring(0, 5)} - ${cls.class_endtime.substring(0, 5)}</td>
+                                <td>${cls.class_capacity}</td>
+                                <td>RM${parseFloat(cls.class_fee).toFixed(2)}</td>
+                                <td>
+                                    <button class="book-btn" onclick="openBookPopup('${cls.class_title}', '${cls.tutor_name}', '${new Date(cls.class_date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}', '${cls.class_starttime.substring(0, 5)}-${cls.class_endtime.substring(0, 5)}', '${parseFloat(cls.class_fee).toFixed(2)}', ${cls.class_id})">Book Now</button>
+                                </td>
+                            </tr>
+                        `;
+                        availableClassesTableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                } else {
+                    if (noClassesMessage) {
+                        noClassesMessage.style.display = 'block'; // Show message if no data
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching all available classes:', error);
+                if (noClassesMessage) {
+                    noClassesMessage.textContent = 'An error occurred while loading available classes.';
+                    noClassesMessage.style.display = 'block';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

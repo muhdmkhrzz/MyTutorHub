@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Basic validation
     if (empty($stud_id) || empty($password)) {
+        // Using JavaScript alert and redirect as per original code, but ideally
+        // this would be handled with a more robust notification system.
         echo "<script>alert('Please enter both Student ID and password.'); window.location.href='loginstudent.html';</script>";
         exit();
     }
@@ -46,7 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hashed_password)) {
             // Password is correct, set session variables
             $_SESSION['loggedin'] = true;
-            $_SESSION['user_id'] = $db_id;
+            // IMPORTANT: Changed 'user_id' to 'stud_id' to match student_api.php's expectation
+            $_SESSION['stud_id'] = $db_id;
             $_SESSION['user_name'] = $user_name;
             $_SESSION['role'] = 'student'; // Explicitly set role
 

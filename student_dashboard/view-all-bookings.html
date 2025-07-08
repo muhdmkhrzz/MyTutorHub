@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - MyTutorHub</title>
+    <link rel="stylesheet" href="student.css"> <!-- Assuming student.css is in the same directory -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic styling for this specific page, can be moved to student.css if preferred */
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-bar-full {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            align-items: center;
+        }
+        .search-bar-full input[type="text"] {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .search-bar-full i {
+            color: var(--text-light);
+            margin-left: 5px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .bookings-table th, .bookings-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .bookings-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .bookings-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .bookings-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        .no-bookings-message {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        .back-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            .search-bar-full {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .bookings-table th, .bookings-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="student.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        <h1>My Bookings</h1>
+
+        <div class="search-bar-full">
+            <i class="fas fa-search"></i>
+            <input type="text" id="booking-search" placeholder="Search by class title or tutor name..." aria-label="Search bookings">
+        </div>
+
+        <div class="table-container">
+            <table class="bookings-table">
+                <thead>
+                    <tr>
+                        <th>Class Title</th>
+                        <th>Tutor Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Fee</th>
+                        <th>Booking Date</th>
+                        <th>Class Rating</th>
+                        <th>Tutor Rating</th>
+                    </tr>
+                </thead>
+                <tbody id="bookings-table-body">
+                    <!-- Bookings will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+            <p id="no-bookings-message" class="no-bookings-message" style="display: none;">You have no booked classes yet.</p>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to get the correct URL for PHP scripts
+        function getPhpScriptUrl(scriptName) {
+            // Assumes view-all-bookings.html is in MYTUTORHUB/student_dashboard/
+            // And PHP files are in MYTUTORHUB/database/
+            // So, from view-all-bookings.html, go up one level (..) then into database/
+            return '../database/' + scriptName;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllBookingsContent();
+
+            // Search functionality
+            document.getElementById('booking-search').addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#bookings-table-body tr');
+                let foundResults = false;
+
+                rows.forEach(row => {
+                    const classTitle = row.querySelector('.booking-class-title').textContent.toLowerCase();
+                    const tutorName = row.querySelector('.booking-tutor-name').textContent.toLowerCase();
+                    if (classTitle.includes(searchValue) || tutorName.includes(searchValue)) {
+                        row.style.display = '';
+                        foundResults = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                const noBookingsMessage = document.getElementById('no-bookings-message');
+                if (noBookingsMessage) {
+                    noBookingsMessage.style.display = foundResults ? 'none' : 'block';
+                }
+            });
+        });
+
+        async function fetchAllBookingsContent() {
+            const bookingsTableBody = document.getElementById('bookings-table-body');
+            const noBookingsMessage = document.getElementById('no-bookings-message');
+            
+            bookingsTableBody.innerHTML = ''; // Clear existing content
+            if (noBookingsMessage) {
+                noBookingsMessage.style.display = 'none'; // Hide message initially
+            }
+
+            try {
+                const response = await fetch(getPhpScriptUrl('student.php'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=fetch_all_bookings'
+                });
+                const result = await response.json();
+
+                if (result.status === 'success' && result.data.length > 0) {
+                    result.data.forEach(booking => {
+                        const row = `
+                            <tr>
+                                <td class="booking-class-title">${booking.class_title}</td>
+                                <td class="booking-tutor-name">${booking.tutor_name}</td>
+                                <td>${new Date(booking.class_date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                                <td>${booking.class_starttime.substring(0, 5)} - ${booking.class_endtime.substring(0, 5)}</td>
+                                <td>RM${parseFloat(booking.class_fee).toFixed(2)}</td>
+                                <td>${new Date(booking.booking_date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                                <td>${booking.avg_class_rating ? parseFloat(booking.avg_class_rating).toFixed(1) + ' <i class="fas fa-star"></i>' : 'N/A'}</td>
+                                <td>${booking.avg_tutor_rating ? parseFloat(booking.avg_tutor_rating).toFixed(1) + ' <i class="fas fa-star"></i>' : 'N/A'}</td>
+                            </tr>
+                        `;
+                        bookingsTableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                } else {
+                    if (noBookingsMessage) {
+                        noBookingsMessage.style.display = 'block'; // Show message if no data
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching all bookings:', error);
+                if (noBookingsMessage) {
+                    noBookingsMessage.textContent = 'An error occurred while loading your bookings.';
+                    noBookingsMessage.style.display = 'block';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
