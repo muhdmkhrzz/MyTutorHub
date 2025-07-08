@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Classes - MyTutorHub</title>
-    <link rel="stylesheet" href="student.css"> <!-- Assuming student.css is in the same directory -->
+    <link rel="stylesheet" href="student.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Basic styling for this specific page, can be moved to student.css if preferred */
         body {
             background-color: var(--secondary-color);
             color: var(--text-color);
@@ -93,7 +92,7 @@
         }
         .book-btn {
             padding: 8px 12px;
-            background-color: #4CAF50; /* Green for Book Now */
+            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 8px;
@@ -104,8 +103,6 @@
         .book-btn:hover {
             background-color: #45a049;
         }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -153,7 +150,7 @@
         </div>
     </div>
 
-    <!-- Book Class Popup (reused from student.html) -->
+    <!-- Book Class Popup -->
     <div class="popup-overlay" id="book-popup" style="display: none;">
         <div class="popup-content">
             <h3>Book Class</h3>
@@ -176,7 +173,7 @@
     <div id="notification" class="notification" aria-live="polite"></div>
 
     <script>
-        // --- General Popup Functions (copied from student.html) ---
+        // --- General Popup Functions ---
         function showNotification(message, autoHide = true) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -188,9 +185,7 @@
             }
         }
 
-        // --- Book Now Popup (Specific Class Booking - copied from student.html) ---
-        // Note: This function requires 'stud_id' which is typically from a session.
-        // For this page, we'll assume the student is logged in and the PHP backend handles stud_id from session.
+        // --- Book Now Popup (Specific Class Booking) ---
         function openBookPopup(title, tutor, date, time, fee, classId) {
             document.getElementById('book-class-title').textContent = title;
             document.getElementById('book-class-tutor').textContent = tutor;

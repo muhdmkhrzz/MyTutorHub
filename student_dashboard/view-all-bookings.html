@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings - MyTutorHub</title>
-    <link rel="stylesheet" href="student.css"> <!-- Assuming student.css is in the same directory -->
+    <link rel="stylesheet" href="student.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Basic styling for this specific page, can be moved to student.css if preferred */
         body {
             background-color: var(--secondary-color);
             color: var(--text-color);
@@ -91,8 +90,6 @@
         .back-button:hover {
             background-color: var(--primary-hover);
         }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -144,9 +141,6 @@
     <script>
         // Helper function to get the correct URL for PHP scripts
         function getPhpScriptUrl(scriptName) {
-            // Assumes view-all-bookings.html is in MYTUTORHUB/student_dashboard/
-            // And PHP files are in MYTUTORHUB/database/
-            // So, from view-all-bookings.html, go up one level (..) then into database/
             return '../database/' + scriptName;
         }
 
