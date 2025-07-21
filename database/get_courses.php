@@ -21,7 +21,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 try {
     // Fetch all courses
-    $sql = "SELECT course_id, course_name FROM Course ORDER BY course_name ASC";
+    $sql = "SELECT course_id, course_name FROM course ORDER BY course_name ASC";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

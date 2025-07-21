@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
     
-        $sql_insert_class = "INSERT INTO Class (class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_deadline, class_fee, tutor_id, course_id) VALUES (?, ?, ?, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, ?)";
+        $sql_insert_class = "INSERT INTO class (class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_deadline, class_fee, tutor_id, course_id) VALUES (?, ?, ?, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, ?)";
         $stmt_insert_class = $conn->prepare($sql_insert_class);
         if (!$stmt_insert_class) {
             throw new Exception("Prepare failed (insert class): " . $conn->error);

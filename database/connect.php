@@ -7,6 +7,7 @@ $database = "if0_39319055_mytutorhub";
 // Connect to MySQL
 $conn = new mysqli($host, $username, $password, $database);
 
+define ('BASE_URL', 'http://mytutorhub.infinityfreeapp.com/');
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

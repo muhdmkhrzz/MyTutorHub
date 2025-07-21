@@ -28,7 +28,7 @@ $tutor_id = $_SESSION['user_id'];
 
 try {
     // Ensure class_deadline is explicitly selected
-    $sql = "SELECT class_id, class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_fee, course_id, class_file, class_deadline FROM Class WHERE class_id = ? AND tutor_id = ?";
+    $sql = "SELECT class_id, class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_fee, course_id, class_file, class_deadline FROM class WHERE class_id = ? AND tutor_id = ?";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         throw new Exception("Prepare failed: " . $conn->error);
@@ -42,7 +42,7 @@ try {
 
         // Optionally, fetch course name
         if ($class_details['course_id']) {
-            $sql_course = "SELECT course_name FROM Course WHERE course_id = ?";
+            $sql_course = "SELECT course_name FROM course WHERE course_id = ?";
             $stmt_course = $conn->prepare($sql_course);
             if ($stmt_course) {
                 $stmt_course->bind_param("i", $class_details['course_id']);
@@ -56,7 +56,7 @@ try {
         }
 
         // Optionally, count enrolled students for this class from the Booking table
-        $sql_enrolled_students = "SELECT COUNT(booking_id) AS enrolled_count FROM Booking WHERE class_id = ?";
+        $sql_enrolled_students = "SELECT COUNT(booking_id) AS enrolled_count FROM booking WHERE class_id = ?";
         $stmt_enrolled = $conn->prepare($sql_enrolled_students);
         if ($stmt_enrolled) {
             $stmt_enrolled->bind_param("i", $class_id);

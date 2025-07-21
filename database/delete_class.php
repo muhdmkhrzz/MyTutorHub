@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->begin_transaction(); 
 
         // 1. Delete related records from the 'Review' table
-        $sql_delete_reviews = "DELETE FROM Review WHERE class_id = ?";
+        $sql_delete_reviews = "DELETE FROM review WHERE class_id = ?";
         $stmt_delete_reviews = $conn->prepare($sql_delete_reviews);
         if ($stmt_delete_reviews) {
             $stmt_delete_reviews->bind_param("i", $class_id);
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // 2. Delete related records from the 'Booking' table
-        $sql_delete_bookings = "DELETE FROM Booking WHERE class_id = ?";
+        $sql_delete_bookings = "DELETE FROM booking WHERE class_id = ?";
         $stmt_delete_bookings = $conn->prepare($sql_delete_bookings);
         if ($stmt_delete_bookings) {
             $stmt_delete_bookings->bind_param("i", $class_id);
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // 3. Delete the class itself
-        $sql_delete_class = "DELETE FROM Class WHERE class_id = ? AND tutor_id = ?";
+        $sql_delete_class = "DELETE FROM class WHERE class_id = ? AND tutor_id = ?";
         $stmt_delete_class = $conn->prepare($sql_delete_class);
         if (!$stmt_delete_class) {
             throw new Exception("Prepare failed (delete class): " . $conn->error);

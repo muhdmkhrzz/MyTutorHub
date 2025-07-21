@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $class_file = !empty($_POST['class_file']) ? $conn->real_escape_string($_POST['class_file']) : NULL; 
 
     try {
-        $sql_update_class = "UPDATE Class SET 
+        $sql_update_class = "UPDATE class SET 
                                 class_title = ?, 
                                 class_description = ?, 
                                 class_date = ?, 

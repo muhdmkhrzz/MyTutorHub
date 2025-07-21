@@ -24,7 +24,7 @@ $tutor_id = $_SESSION['user_id'];
 try {
     // Fetch Today's Schedule (Classes for today)
     $today = date('Y-m-d');
-    $sql_today_classes = "SELECT class_id, class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_file FROM Class WHERE tutor_id = ? AND class_date = ? ORDER BY class_starttime ASC";
+    $sql_today_classes = "SELECT class_id, class_title, class_description, class_date, class_starttime, class_endtime, class_capacity, class_file FROM class WHERE tutor_id = ? AND class_date = ? ORDER BY class_starttime ASC";
     $stmt_today = $conn->prepare($sql_today_classes);
     if (!$stmt_today) {
         throw new Exception("Prepare failed: " . $conn->error);
@@ -41,7 +41,7 @@ try {
     $stmt_today->close();
 
     // Fetch All My Classes
-    $sql_my_classes = "SELECT class_id, class_title, class_description, class_file FROM Class WHERE tutor_id = ? ORDER BY class_date DESC, class_starttime DESC";
+    $sql_my_classes = "SELECT class_id, class_title, class_description, class_file FROM class WHERE tutor_id = ? ORDER BY class_date DESC, class_starttime DESC";
     $stmt_my = $conn->prepare($sql_my_classes);
     if (!$stmt_my) {
         throw new Exception("Prepare failed: " . $conn->error);

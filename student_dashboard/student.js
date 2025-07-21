@@ -130,10 +130,8 @@ async function fetchDashboardContent() {
                                     <p><i class="fas fa-chalkboard-teacher"></i> Tutor: <span class="tutor_name">${cls.tutor_name}</span></p>
                                     ${cls.avg_class_rating !== null ? `<p class="class-rating-display">Class Rating: ${parseFloat(cls.avg_class_rating).toFixed(1)} <i class="fas fa-star"></i></p>` : ''}
                                     ${cls.avg_tutor_rating !== null ? `<p class="tutor-rating-display">Tutor Rating: ${parseFloat(cls.avg_tutor_rating).toFixed(1)} <i class="fas fa-star"></i></p>` : ''}
-                                    <!-- Changed onclick attribute to use single quotes to correctly nest JSON.stringify'd double quotes -->
                                     <button class="review-btn primary-btn" onclick='openRatingPopup(${JSON.stringify(cls.class_title)}, ${JSON.stringify(cls.tutor_name)}, ${cls.class_id}, ${JSON.stringify(data.student_info.stud_id)})'>Rate Class</button>
-                                    <!-- Changed onclick attribute to use single quotes to correctly nest JSON.stringify'd double quotes -->
-                                    <button class="review-btn secondary-btn" onclick='openTutorRatingPopup(${JSON.stringify(cls.tutor_name)}, ${JSON.stringify(cls.tutor_id)})'>Rate Tutor</button>
+                                    <button class="review-btn secondary-btn" onclick='openTutorRatingPopup(${JSON.stringify(cls.tutor_name)}, ${JSON.stringify(cls.tutor_id)}, ${JSON.stringify(data.student_info.stud_id)})'>Rate Tutor</button>
                                 </div>
                             </article>
                         `;

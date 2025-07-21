@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     // Check if the stud_id already exists
-    $check_id_sql = "SELECT stud_id FROM Student WHERE stud_id = ?";
+    $check_id_sql = "SELECT stud_id FROM student WHERE stud_id = ?";
     $stmt_check_id = $conn->prepare($check_id_sql);
     $stmt_check_id->bind_param("i", $stud_id); // 'i' for integer, assuming stud_id is INT
     $stmt_check_id->execute();
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check_id->close();
 
     // Check if the email already exists
-    $check_email_sql = "SELECT stud_id FROM Student WHERE stud_email = ?";
+    $check_email_sql = "SELECT stud_id FROM student WHERE stud_email = ?";
     $stmt_check_email = $conn->prepare($check_email_sql);
     $stmt_check_email->bind_param("s", $stud_email);
     $stmt_check_email->execute();
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check_email->close();
 
     // Prepare an SQL statement for insertion, including stud_id and stud_name
-    $sql = "INSERT INTO Student (stud_id, stud_password, stud_name, stud_email) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO student (stud_id, stud_password, stud_name, stud_email) VALUES (?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 

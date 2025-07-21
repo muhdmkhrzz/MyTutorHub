@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $table = "Student";
+    $table = "student";
     $id_column = "stud_id";
     $password_column = "stud_password";
     $name_column = "stud_name";

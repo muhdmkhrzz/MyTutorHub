@@ -45,7 +45,7 @@ if (isset($_POST['action'])) {
 
         case 'submit_tutor_rating':
             require_once 'submit_tutor_rating.php';
-            $tutor_id = isset($_POST['tutor_id']) ? $_POST['tutor_id'] : '';
+            $tutor_id = isset($_POST['tutor_id']) ? $_POST['tutor_id'] : 0;
             $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
             $result = submitTutorRating($conn, $stud_id, $tutor_id, $rating);
             echo json_encode($result);
